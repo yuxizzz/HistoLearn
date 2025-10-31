@@ -2,32 +2,33 @@
 % Please edit documentation in R/LoadData.R
 \name{LoadData}
 \alias{LoadData}
-\title{Calculates Information Criteria}
+\title{Load in Histological Features}
 \usage{
-LoadData(filepath, label = NULL)
+LoadData(feature, label = NULL, label_col = "label")
 }
 \arguments{
-\item{datapath}{The file path for the input data, the data should be
+\item{feature}{The file path for the input data, the data should be
+in csv, tsv format}
+
+\item{label}{The file path for the input data, the data should be
+in csv, tsv format}
+
+\item{label_col}{The file path for the input data, the data should be
 in csv, tsv format}
 }
 \value{
-Returns an S3 object of class InfCriteria with results.
-\itemize{
-\item BICresults - A value of class numeric indicating BIC value.
-\item AIC results - A value of class numeric indicating AIC value.
-}
+Returns a dataframe with feature columns and one label column
 }
 \description{
-A function that calculates information criteria, BIC (Bayesian
-Information Criterion) and AIC (Akaike Information Criterion)
+A function that load in histological features extracted from any
+pathology foundation model. Optionally include labels
 given log-likelihood, number of clusters, dimensionality of the
 dataset and the number of observations.
 }
 \examples{
-HistData <- LoadData(filepath)
-# Access BIC value
-HistData$feature
-HistData$label
+data(CRCFeature)
+data(CRCLabel)
+HistData <- LoadData(CRCFeature, CRCLabel)
 
 }
 \references{

@@ -18,3 +18,5 @@ RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Imports: 
     utils
+Depends: 
+    R (>= 3.5)

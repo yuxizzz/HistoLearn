@@ -1,24 +1,22 @@
-#' Calculates Information Criteria
+#' Load in Histological Features
 #'
-#' A function that calculates information criteria, BIC (Bayesian
-#' Information Criterion) and AIC (Akaike Information Criterion)
+#' A function that load in histological features extracted from any
+#' pathology foundation model. Optionally include labels
 #' given log-likelihood, number of clusters, dimensionality of the
 #' dataset and the number of observations.
 #'
-#' @param datapath The file path for the input data, the data should be
+#' @param feature The file path for the input data, the data should be
 #' in csv, tsv format
-#'
-#' @return Returns an S3 object of class InfCriteria with results.
-#' \itemize{
-#'   \item BICresults - A value of class numeric indicating BIC value.
-#'   \item AIC results - A value of class numeric indicating AIC value.
-#' }
+#' @param label The file path for the input data, the data should be
+#' in csv, tsv format
+#' @param label_col The file path for the input data, the data should be
+#' in csv, tsv format
+#' @return Returns a dataframe with feature columns and one label column
 #'
 #' @examples
-#' HistData <- LoadData(filepath)
-#' # Access BIC value
-#' HistData$feature
-#' HistData$label
+#' data(CRCFeature)
+#' data(CRCLabel)
+#' HistData <- LoadData(CRCFeature, CRCLabel)
 #'
 #' @references
 #'
@@ -30,22 +28,19 @@
 #' USA, pp. 267–281. Springer Verlag.
 #'
 #' @export
-LoadData <- function(filepath, label=NULL) {
-
+LoadData <- function(feature, label = NULL, label_col = "label") {
   # calculate number of parameters based on Gaussian mixture
-  data <- utils::read.csv(filepath)
-  if (label != NULL) {
-    label <- read.csv(label)
-  }
-
-  ## Check if they are the same dimension
-
   # create object
-  Results <- list(feature = data,
-                  label = label)
+  result <- feature
 
-  class(Results) <- "HistFeature"
-  return(Results)
+  if (!is.null(label)){
+    if (is.data.frame(label) && ncol(label) == 1L) label <- label[[1]]
+    if (is.matrix(label) && ncol(label) == 1L) label <- label[, 1]
+    labels_fac  <- as.factor(label)
+    result[[label_col]] <- labels_fac
+  }
+  rownames(result) <- NULL
+  return(result)
 }
 
 # need to wrap around dontrun if the example code
