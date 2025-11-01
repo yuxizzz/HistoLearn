@@ -14,9 +14,9 @@
 #' @return Returns a dataframe with feature columns and one label column
 #'
 #' @examples
-#' data(CRCFeature)
-#' data(CRCLabel)
-#' HistData <- LoadData(CRCFeature, CRCLabel)
+#' data(train_embeddings)
+#' data(train_labels)
+#' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 #'
 #' @references
 #'
@@ -28,19 +28,20 @@
 #' USA, pp. 267–281. Springer Verlag.
 #'
 #' @export
-LoadData <- function(feature, label = NULL, label_col = "label") {
-  # calculate number of parameters based on Gaussian mixture
-  # create object
-  result <- feature
-
+load_embeddings <- function(feature, label = NULL, label_col = "label") {
+  result <- as.data.frame(feature)
+  colnames(result) <- seq_len(ncol(result))
   if (!is.null(label)){
     if (is.data.frame(label) && ncol(label) == 1L) label <- label[[1]]
     if (is.matrix(label) && ncol(label) == 1L) label <- label[, 1]
     labels_fac  <- as.factor(label)
-    result[[label_col]] <- labels_fac
+    feature_embedding <- list(feature = result,
+                              label = labels_fac)
+  } else {
+    feature_embedding <- list(feature = result,
+                              label = labels_fac)
   }
-  rownames(result) <- NULL
-  return(result)
+  return(feature_embedding)
 }
 
 # need to wrap around dontrun if the example code

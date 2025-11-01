@@ -17,6 +17,12 @@ LazyData: true
 RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Imports: 
+    ggplot2,
+    stats,
     utils
 Depends: 
     R (>= 3.5)
+Suggests: 
+    testthat (>= 3.0.0),
+    uwot
+Config/testthat/edition: 3
