@@ -39,7 +39,8 @@ train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = "knn")
     dr_model = dr_out$model,
     model = fitted_model,
     train_pred = train_predictions,
-    method = c(dr, model)
+    method = c(dr, model),
+    dr_dim = dr_k
   )
 }
 
