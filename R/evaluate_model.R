@@ -9,7 +9,7 @@
 #'   the log-likelihood.
 #' @param test_data A positive integer indicating the number of clusters.
 #'
-#' @return a png
+#' @return a list
 #'
 #' @examples
 #' data(train_embeddings)
@@ -36,28 +36,16 @@ evaluate_model <- function(trained_model, test_data) {
 
   X_test_dr <- NULL
   X_test <- NULL
-  # need to make sure the test and train dim match
-  if (trained_model$method[1] == 'pca') {
-    X_test <- predict(trained_model$dr_model, test_data$feature)
-    k <- trained_model$dr_dim
-    X_test_dr <- X_test[, 1:k, drop = FALSE]
-  } else {
-    stop("not supported")
-  }
-
+  X_test <- predict(trained_model$dr_model, test_data$feature)
+  k <- trained_model$dr_dim
+  X_test_dr <- X_test[, 1:k, drop = FALSE]
   predictions <- predict(trained_model$model,
                          X_test_dr,
                          type = "class")
   cm <- caret::confusionMatrix(predictions, test_data$label)
   cm_df <- as.data.frame(cm$table)
-  metrics <- c(
-    Accuracy    = cm$overall["Accuracy"],
-    Sensitivity = cm$byClass["Sensitivity"],
-    Specificity = cm$byClass["Specificity"]
-  )
-  metrics_text <- sprintf(
-    "Accuracy: %.3f\nSensitivity: %.3f\nSpecificity: %.3f",
-    metrics["Accuracy"], metrics["Sensitivity"], metrics["Specificity"]
+  metrics <- list(
+    Accuracy = cm$overall["Accuracy"]
   )
 
   p <- ggplot2::ggplot(cm_df, aes(x = Prediction, y = Reference, fill = Freq)) +
@@ -69,10 +57,7 @@ evaluate_model <- function(trained_model, test_data) {
       x = "Predicted Label",
       y = "True Label"
     ) +
-    theme_minimal()  +
-    annotate(
-      "text", x = Inf, y = -Inf, hjust = 1.1, vjust = -0.5,
-      label = metrics_text, size = 4, color = "black"
-    )
+    theme_minimal()
+  return(list(conf_matrix=p, metric=metrics))
 }
 #[END]

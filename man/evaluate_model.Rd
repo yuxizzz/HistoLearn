@@ -13,7 +13,7 @@ the log-likelihood.}
 \item{test_data}{A positive integer indicating the number of clusters.}
 }
 \value{
-a png
+a list
 }
 \description{
 A function that calculates information criteria, BIC (Bayesian

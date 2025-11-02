@@ -1,0 +1,119 @@
+---
+title: "Introduction to HistoLearn"
+author: "Yuxi Zhu"
+date: "`r format(Sys.time(), '%d %b %Y')`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: false
+vignette: >
+  %\VignetteIndexEntry{Introduction to HistoLearn}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.align = "center", 
+               out.width = "90%",
+               fig.width = 6, fig.height = 5.5,
+               dev.args=list(pointsize=10),
+               par = TRUE, # needed for setting hook 
+               collapse = TRUE, # collapse input & ouput code in chunks
+               warning = FALSE)
+
+knit_hooks$set(par = function(before, options, envir)
+  { if(before && options$fig.show != "none") 
+       par(family = "sans", mar=c(4.1,4.1,1.1,1.1), mgp=c(3,1,0), tcl=-0.5)
+})
+set.seed(1) # for exact reproducibility
+```
+
+## Introduction
+
+**HistoLearn** is a simple R package for interpreting and visualizing foundation model derived histological features and training supervised machine learning models using these features. The function ***load_embeddings*** takes in the feature matrix or dataframe with each row representing a sample and, optionally, a label dataframe or matrix that specify the labels for each sample and create a **histofeature** object for downstream analysis. Function ***visualize_embeddings*** allows the user to visualize the embeddings of type **histofeature** using PCA and umap (where umap is still under construction). Function ***train_model***  allows the user to first use dimensional reduction method to reduce the dimension and train a supervised machine learning model to conduct classifications. **evaludate_model** is available for evaluating and inferring the model on testing data of same structure. The shiny implementation of *HistoLearn* is available as ***HistoLearn*** (under construction). For more information, see details below. **This document gives a tour of HistoLearn (version 0.1.0) functionalities**. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production.
+
+See `help(package = "HistoLearn")` for further details and references provided by `citation("HistoLearn")`. To download **HistoLearn**, use the following commands:
+
+``` r
+require("devtools")
+install_github("yuxizzz/HistoLearn", build_vignettes = TRUE)
+library("HistoLearn")
+```
+
+To list all functions available in the package:
+
+``` r
+lsf.str("package:HistoLearn")
+```
+
+<br>
+
+## Example Usage
+
+### Load the data
+
+```{r}
+library(HistoLearn)
+```
+
+Here, we are using the example dataset from the package. Note that the column dimension of the train set embeddings and test set embeddings must be the same.
+```{r}
+trainset <- HistoLearn::load_embeddings(feature=HistoLearn::train_embeddings, label=HistoLearn::train_labels)
+testset <- HistoLearn::load_embeddings(feature=HistoLearn::test_embeddings, label=HistoLearn::test_labels)
+```
+
+## Visualize Data
+
+We will first visualize the pca embeddings of the histological feature. Ideally, we want to see that dots of the same label to be clustered together.
+
+Visualize the data using the first 2 dimensions of pca.
+```{r, fig.width = 8}
+visualize_embeddings(input_data=trainset, dimensions = 2, type='pca')
+```
+Visualize first 4 dimensions of pca using a paired plot. 
+```{r, fig.width = 8}
+visualize_embeddings(input_data=trainset, dimensions = 4, type='pca')
+```
+## Train and Evaluate the Classification Model
+
+Now, we are training the downstream classification model using the default PCA and KNN.
+```{r}
+model <- train_model(trainset, dr = "pca", dr_k = 20, model = "knn")
+```
+we will evaluate the model on the our test set. 
+```{r}
+evaluate_model(trained_model=model, test_data = testset)
+```
+
+## References
+
+-   [Aitchison, J. and C. H. Ho (1989). The multivariate Poisson-log normal distribution. Biometrika 76.](https://www.jstor.org/stable/2336624?seq=1)
+
+-   [Aitken, A. C. (1926). A series formula for the roots of algebraic and transcendental equations. *Proceedings of the Royal Society of Edinburgh*](https://www.cambridge.org/core/journals/proceedings-of-the-royal-society-of-edinburgh/article/iiia-series-formula-for-the-roots-of-algebraic-and-transcendental-equations/0CC96A97C8B634E2730F5208E506E6A9)
+
+-   [Akaike, H. (1973). Information theory and an extension of the maximum likelihood principle. In *Second International Symposium on Information Theory*, New York, NY, USA, pp. 267–281. Springer Verlag.](https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15)
+
+-   [Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture model for clustering with the integrated classification likelihood. *IEEE Transactions on Pattern Analysis and Machine Intelligence*.](https://hal.inria.fr/inria-00073163/document)
+
+-   [B¨ohning, D., E. Dietz, R. Schaub, P. Schlattmann, and B. Lindsay (1994). The distribution of the likelihood ratio for mixtures of densities from the one-parameter exponential family. *Annals of the Institute of Statistical Mathematics*](https://link.springer.com/article/10.1007/BF01720593)
+
+-   [Bozdogan, H. (1994). Mixture-model cluster analysis using model selection criteria and a new informational measure of complexity. In *Proceedings of the First US/Japan Conference on the Frontiers of Statistical Modeling: An Informational Approach: Volume 2 Multivariate Statistical Modeling*, pp. 69–113. Dordrecht: Springer Netherlands.](https://link.springer.com/chapter/10.1007/978-94-011-0800-3_3)
+
+-   Campbell, J., C. Fraley, F. Murtagh, and A. Raftery (1997). Linear flaw detection in woven textiles using model-based clustering. *Pattern Recognition Letters*.
+
+-   [Dempster, A. P., N. M. Laird, and D. B. Rubin (1977). Maximum likelihood from incomplete data via the EM algorithm. *Journal of the Royal Statistical Society: Series B*](https://www.ece.iastate.edu/~namrata/EE527_Spring08/Dempster77.pdf)
+
+-   Katz, R. W. (1981). On some criteria for estimating the order of a Markov chain. *Technometrics*.
+
+-   [Schwarz, G. (1978). Estimating the dimension of a model. *The Annals of Statistics* 6.](https://www.jstor.org/stable/2958889?seq=1)
+
+-   Shibata, R. (1976). Selection of the order of an autoregressive model by Akaike’s information criterion. *Biometrika*.
+
+------------------------------------------------------------------------
+
+```{r}
+sessionInfo()
+```
+:::
+::::

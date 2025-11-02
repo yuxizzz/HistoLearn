@@ -30,6 +30,13 @@
 #' @export
 load_embeddings <- function(feature, label = NULL) {
   result <- as.data.frame(feature)
+  if (anyNA(result)) {
+    stop("feature matrix contains NA values.", call. = TRUE)
+  }
+  if (any(is.infinite(as.matrix(result)))) {
+    stop("feature matrix contains Inf or -Inf values.", call. = TRUE)
+  }
+
   colnames(result) <- seq_len(ncol(result))
   feature_embedding <- list(feature = result,
                             label = NULL)

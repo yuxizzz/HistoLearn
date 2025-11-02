@@ -3,3 +3,5 @@
 ^LICENSE\.md$
 ^common_cmd\.R$
 ^draft\.Rmd$
+^doc$
+^Meta$

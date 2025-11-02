@@ -52,3 +52,12 @@ test_that("load_embeddings fails if feature and label lengths mismatch", {
 
   expect_error(load_embeddings(feature, label))
 })
+
+test_that("load_embeddings fails if feature matrix is in valid", {
+  feature <- matrix(1:4, nrow = 2, ncol = 2)
+  labels <- c("A", "B")
+  feature[1, 2] <- NA
+  expect_error(load_embeddings(feature, label = labels))
+  feature[1, 2] <- Inf
+  expect_error(load_embeddings(feature, label = labels))
+})

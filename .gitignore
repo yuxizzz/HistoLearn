@@ -4,3 +4,6 @@
 .Ruserdata
 common_cmd.R
 draft.Rmd
+inst/doc
+/doc/
+/Meta/
