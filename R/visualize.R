@@ -1,16 +1,15 @@
-#' Visualize the command
+#' Visualize Embeddings using Reduced Dimensions
 #'
-#' A function that calculates information criteria, BIC (Bayesian
-#' Information Criterion) and AIC (Akaike Information Criterion)
-#' given log-likelihood, number of clusters, dimensionality of the
-#' dataset and the number of observations.
+#' A function that creates a 2D scatterplot or a multi-dimensional paired plot
+#' of embeddings.
 #'
-#' @param input_data A negative value of class numeric indicating
-#'   the log-likelihood.
-#' @param dimensions A positive integer indicating the number of clusters.
-#' @param type A positive integer indicating the dimensionality
-#'   of the dataset.
-#'
+#' @param input_data an object of class \code{"histofeature"}
+#' @param dimensions A A positive integer indicating the dimension to visualize,
+#' ranging from 2 to 8. The default is \code{2}.
+#' @param type The type of dimension reduction techniques to perform, currently
+#' only support \code{"pca"}.
+#' @return
+#' A \code{ggplot} or \code{ggmatrix} object that visualized the relationship.
 #'
 #' @examples
 #' data(train_embeddings)
@@ -28,26 +27,43 @@
 #' USA, pp. 267–281. Springer Verlag.
 #'
 #' @export
-#' @import stats
-#' @import ggplot2
+#' @import stats ggplot2 GGally
 visualize_embeddings <- function(input_data,
                                   dimensions=2,
                                   type='pca') {
+  if (!inherits(input_data, "histofeature")) {
+    stop("invalid input", call. = FALSE)
+  }
+
+  k <- as.integer(dimensions)
+  if (k > 10 || k < 2) {
+    stop("Not informative or invalid. Choose dimension within 2 to 8", call.=TRUE)
+  }
 
   if (type=='pca') {
     pca_result <- stats::prcomp(input_data$feature, center = TRUE, scale. = TRUE)
-    df_pca <- data.frame(
-      pc1 = pca_result$x[, 1],
-      pc2 = pca_result$x[, 2],
-      Label = input_data$label
-    )
-    ggplot2::ggplot(df_pca, aes(pc1, pc2, color = Label)) +
-      geom_point(size = 2, alpha = 0.7) +
-      theme_minimal() +
-      ggtitle("PCA projection of the Embeddings")
+    k <- min(k, ncol(pca_result$x))
 
+    reduced_dim <- as.data.frame(pca_result$x[, seq_len(k), drop = FALSE])
+    colnames(reduced_dim) <- paste0("dim", seq_len(k))
+    reduced_dim$Label <- input_data$label
   } else {
-    stop("not supported")
+    stop("not supported", call.= FALSE)
   }
+
+  if (k > 2) {
+    p <- GGally::ggpairs(
+      reduced_dim,
+      columns = seq_len(k),
+      aes(color = Label)) +
+      ggplot2::theme_minimal() +
+      ggplot2::ggtitle(paste("Paired", type, " projection with dimension of", k))
+  } else {
+    p <- ggplot2::ggplot(reduced_dim, aes(dim1, dim2, color = Label)) +
+      ggplot2::geom_point(size = 2, alpha = 0.8) +
+      ggplot2::theme_minimal() +
+      ggplot2::ggtitle(paste(type, " projection with dimension of", k))
+  }
+  return(p)
 }
 #[END]

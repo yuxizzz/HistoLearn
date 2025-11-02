@@ -5,13 +5,13 @@
 #' given log-likelihood, number of clusters, dimensionality of the
 #' dataset and the number of observations.
 #'
-#' @param feature The file path for the input data, the data should be
-#' in csv, tsv format
-#' @param label The file path for the input data, the data should be
-#' in csv, tsv format
-#' @param label_col The file path for the input data, the data should be
-#' in csv, tsv format
-#' @return Returns a dataframe with feature columns and one label column
+#' @param feature The matrix/data.frame; rows are samples
+#' @param label The vector or 1-col data.frame/matrix of labels (or NULL)
+#' @return Returns an object of class \code{"histofeature"}
+#' \itemize{
+#'   \item feature - A data.frame of features with columns named "1","2",...
+#'   \item label - A factor of labels or \code{NULL}
+#' }
 #'
 #' @examples
 #' data(train_embeddings)
@@ -28,32 +28,21 @@
 #' USA, pp. 267–281. Springer Verlag.
 #'
 #' @export
-load_embeddings <- function(feature, label = NULL, label_col = "label") {
+load_embeddings <- function(feature, label = NULL) {
   result <- as.data.frame(feature)
   colnames(result) <- seq_len(ncol(result))
+  feature_embedding <- list(feature = result,
+                            label = NULL)
   if (!is.null(label)){
     if (is.data.frame(label) && ncol(label) == 1L) label <- label[[1]]
     if (is.matrix(label) && ncol(label) == 1L) label <- label[, 1]
     labels_fac  <- as.factor(label)
-    feature_embedding <- list(feature = result,
-                              label = labels_fac)
-  } else {
-    feature_embedding <- list(feature = result,
-                              label = labels_fac)
+    if (nrow(feature) != length(labels_fac)) {
+      stop("feature and label dimension doesn't match", call.=TRUE)
+    }
+    feature_embedding$label <- labels_fac
   }
+  class(feature_embedding) <- "histofeature"
   return(feature_embedding)
 }
-
-# need to wrap around dontrun if the example code
-# use packages outside of the base R/
-
-# @export & @importFrom specify the R packages the
-# function relied on
-
-# outputInfCriteria <- InfCriteriaV3(loglikelihood = -5080,
-#                                     clusters = 2,
-#                                     dimensions = 3,
-#                                     nObservations = 1000)
-# outputInfCriteria$BICresults
-# outputInfCriteria$AICresults
 #[END]

@@ -2,24 +2,25 @@
 % Please edit documentation in R/visualize.R
 \name{visualize_embeddings}
 \alias{visualize_embeddings}
-\title{Visualize the command}
+\title{Visualize Embeddings using Reduced Dimensions}
 \usage{
 visualize_embeddings(input_data, dimensions = 2, type = "pca")
 }
 \arguments{
-\item{input_data}{A negative value of class numeric indicating
-the log-likelihood.}
+\item{input_data}{an object of class \code{"histofeature"}}
 
-\item{dimensions}{A positive integer indicating the number of clusters.}
+\item{dimensions}{A A positive integer indicating the dimension to visualize,
+ranging from 2 to 8. The default is \code{2}.}
 
-\item{type}{A positive integer indicating the dimensionality
-of the dataset.}
+\item{type}{The type of dimension reduction techniques to perform, currently
+only support \code{"pca"}.}
+}
+\value{
+A \code{ggplot} or \code{ggmatrix} object that visualized the relationship.
 }
 \description{
-A function that calculates information criteria, BIC (Bayesian
-Information Criterion) and AIC (Akaike Information Criterion)
-given log-likelihood, number of clusters, dimensionality of the
-dataset and the number of observations.
+A function that creates a 2D scatterplot or a multi-dimensional paired plot
+of embeddings.
 }
 \examples{
 data(train_embeddings)

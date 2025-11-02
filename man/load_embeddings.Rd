@@ -4,20 +4,19 @@
 \alias{load_embeddings}
 \title{Load in Histological Features}
 \usage{
-load_embeddings(feature, label = NULL, label_col = "label")
+load_embeddings(feature, label = NULL)
 }
 \arguments{
-\item{feature}{The file path for the input data, the data should be
-in csv, tsv format}
+\item{feature}{The matrix/data.frame; rows are samples}
 
-\item{label}{The file path for the input data, the data should be
-in csv, tsv format}
-
-\item{label_col}{The file path for the input data, the data should be
-in csv, tsv format}
+\item{label}{The vector or 1-col data.frame/matrix of labels (or NULL)}
 }
 \value{
-Returns a dataframe with feature columns and one label column
+Returns an object of class \code{"histofeature"}
+\itemize{
+\item feature - A data.frame of features with columns named "1","2",...
+\item label - A factor of labels or \code{NULL}
+}
 }
 \description{
 A function that load in histological features extracted from any
