@@ -2,19 +2,18 @@
 % Please edit documentation in R/train_model.R
 \name{train_knn}
 \alias{train_knn}
-\title{KNN training helper}
+\title{Train a K-Nearest Neighbors (KNN) Classifier}
 \usage{
 train_knn(X, y)
 }
 \arguments{
-\item{X}{matrix or data.frame of predictors}
+\item{X}{Matrix of predictor variables.}
 
-\item{y}{factor of class labels}
+\item{y}{Factor of class labels corresponding to the rows of \code{X}.}
 }
 \value{
-list with best tuned model and fitted knn3 object
+The best fitted model using the best K.
 }
 \description{
-KNN training helper
+Internal helper function that trains and tunes a KNN model.
 }
-\keyword{internal}

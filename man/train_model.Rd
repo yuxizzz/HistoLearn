@@ -7,19 +7,30 @@
 train_model(feature_embedding, dr = "pca", dr_k = 20, model = "knn")
 }
 \arguments{
-\item{feature_embedding}{input}
+\item{feature_embedding}{An object of class \code{"histofeature"}}
 
-\item{dr}{now only "pca"}
+\item{dr}{A character string specifying the dimensionality reduction method.
+Currently only \code{"pca"} is supported.}
 
-\item{dr_k}{integer, target dimension for reduction}
+\item{dr_k}{An integer specifying the target reduced dimension}
 
-\item{model}{now only knn}
+\item{model}{A character string specifying the classifier type, Currently
+only K-Nearest Neighbors (knn) is supported.}
 }
 \value{
-a list with fitted model, reduced features, and the DR info
+A list of class \code{"histolearn"} with elements:
+\itemize{
+\item dr_model — the fitted dimensionality reduction model.
+\item model — the fitted classification model.
+\item train_pred — model predictions on the training data.
+\item method — character vector of the reduction and model type.
+\item dr_dim — integer specifying the reduced dimension.
+}
 }
 \description{
-Train a classifier on embeddings
+Fits a supervised classification model using reduced-dimensional embeddings.
+Dimensionality reduction (currently PCA) is applied to the input features before
+training the specified classifier (currently K-Nearest Neighbors).
 }
 \examples{
 data(train_embeddings)

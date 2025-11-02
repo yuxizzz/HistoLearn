@@ -14,6 +14,8 @@ test_that("visualize_embeddings returns ggmatrix when (2 < k <= 8) and
 test_that("visualize_embeddings errors on invalid input class", {
   bad_input <- list(feature = matrix(rnorm(20), nrow = 10), label = rep("A", 10))
   expect_error(visualize_embeddings(bad_input, dimensions = 2, type = "pca"))
+  bad_label <- list(feature = matrix(rnorm(20), nrow = 10), label = NULL)
+  expect_error(visualize_embeddings(bad_label, dimensions = 2, type = "pca"))
 })
 
 test_that("visualize_embeddings errors on too many or too little dimensions", {

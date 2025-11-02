@@ -39,6 +39,9 @@ visualize_embeddings <- function(input_data,
   if (k > 10 || k < 2) {
     stop("Not informative or invalid. Choose dimension within 2 to 8", call.=TRUE)
   }
+  if (is.null(input_data$label)){
+    stop("Require cluster label", call.=TRUE)
+  }
 
   if (type=='pca') {
     pca_result <- stats::prcomp(input_data$feature, center = TRUE, scale. = TRUE)

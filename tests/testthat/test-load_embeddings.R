@@ -1,3 +1,5 @@
+### invalid input!!!!! NA value and others
+
 test_that("load_embeddings works with valid feature and label (base case)", {
   feature <- matrix(1:6, nrow = 3, ncol = 2)
   label <- c("A", "B", "A")
@@ -14,6 +16,7 @@ test_that("load_embeddings works with valid feature and label (base case)", {
   expect_equal(ncol(result$feature), 2)
   expect_equal(levels(result$label), c("A", "B"))
 })
+
 
 test_that("load_embeddings handles NULL label", {
   feature <- matrix(1:4, nrow = 2, ncol = 2)

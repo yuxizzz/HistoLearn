@@ -2,7 +2,7 @@
 % Please edit documentation in R/train_model.R
 \name{reduce_dim}
 \alias{reduce_dim}
-\title{Dimension reduction helper}
+\title{Dimension Reduction Helper}
 \usage{
 reduce_dim(X, method = "pca", k = 20)
 }
@@ -14,8 +14,13 @@ reduce_dim(X, method = "pca", k = 20)
 \item{k}{integer; number of components to keep}
 }
 \value{
-list with reduced matrix and model
+A list containing:
+\itemize{
+\item model — the fitted PCA model.
+\item X_red — the matrix of reduced features.
+}
 }
 \description{
-Dimension reduction helper
+Performs dimensionality reduction on a numeric feature matrix.
+Currently, only Principal Component Analysis (PCA) is implemented.
 }
