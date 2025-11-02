@@ -1,0 +1,16 @@
+citHeader("To cite HistoLearn in publications use:")
+
+citEntry(entry = "Unpublished",
+  title        = "HistoLearn: A R Package Interpreting and Visualizing
+  Foundation Model Derived Histological Features",
+  author       = "Yuxi Zhu",
+  note         = "Updated version with revisions",
+  year         = "2025",
+  url          = "https://github.com/yuxizzz/HistoLearn",
+
+
+  textVersion  =
+  paste("Zhu, Y. (2025) HistoLearn: A R Package Interpreting and Visualizing
+  Foundation Model Derived Histological Features.
+        Unpublished. URL https://github.com/yuxizzz/HistoLearn.")
+)
