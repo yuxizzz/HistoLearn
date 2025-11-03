@@ -2,18 +2,29 @@
 % Please edit documentation in R/train_model.R
 \name{train_knn}
 \alias{train_knn}
-\title{Train a K-Nearest Neighbors (KNN) Classifier}
+\title{Train a k-Nearest Neighbors (k-NN) Classifier}
 \usage{
 train_knn(X, y)
 }
 \arguments{
-\item{X}{Matrix of predictor variables.}
+\item{X}{A matrix or data frame of predictor variables.}
 
-\item{y}{Factor of class labels corresponding to the rows of \code{X}.}
+\item{y}{A factor vector of class labels corresponding to the rows of \code{X}.}
 }
 \value{
-The best fitted model using the best K.
+A fitted \code{knn3} model using the optimal value of \code{k} determined
+via cross-validation.
 }
 \description{
-Internal helper function that trains and tunes a KNN model.
+Internal helper function that trains and tunes a k-Nearest Neighbors (k-NN)
+classification model using the \pkg{caret} package.
+}
+\note{
+Documentation and code debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
+}
+\references{
+Kuhn, M. (2008). Building Predictive Models in R Using the caret
+Package. Journal of Statistical Software, 28(5), 1–26.
+https://doi.org/10.18637/jss.v028.i05
 }

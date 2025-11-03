@@ -3,14 +3,24 @@
 \docType{data}
 \name{train_labels}
 \alias{train_labels}
-\title{Training labels (example data)}
+\title{Training Labels (Example Data)}
 \format{
-A factor or character vector of length \eqn{n}.
+A factor or character vector of length \eqn{n}, where each element
+corresponds to one ROI in \code{train_embeddings}.
 }
 \usage{
 data(train_labels)
 }
 \description{
-Training labels (example data)
+Example class labels corresponding to \code{\link{train_embeddings}}.
+Each label indicates the diagnostic category associated with the
+corresponding histopathology region of interest (ROI).
+}
+\note{
+Documentation and code debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
+}
+\seealso{
+\code{\link{train_embeddings}}
 }
 \keyword{datasets}

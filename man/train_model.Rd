@@ -32,10 +32,38 @@ Fits a supervised classification model using reduced-dimensional embeddings.
 Dimensionality reduction (currently PCA) is applied to the input features before
 training the specified classifier (currently K-Nearest Neighbors).
 }
+\note{
+Documentation and code debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
+}
 \examples{
 data(train_embeddings)
 data(train_labels)
 train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 model <- train_model(feature_embedding=train_set,
                       dr="pca", dr_k=20, model = "knn")
+
+}
+\references{
+Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
+Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
+Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber,
+G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose
+foundation model for computational pathology. Nature Medicine, 30(3), 850–862.
+https://doi.org/10.1038/s41591-024-02857-3
+
+Kuhn, M. (2008). Building Predictive Models in R Using the caret
+Package. Journal of Statistical Software, 28(5), 1–26.
+https://doi.org/10.18637/jss.v028.i05
+
+R Core Team (2025). \emph{R: A Language and Environment for
+Statistical Computing}. R Foundation for Statistical Computing,
+Vienna, Austria. \url{https://www.R-project.org/}.
+
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+Springer-Verlag New York, 2016.
+
+Sarkar D (2008). \emph{Lattice: Multivariate Data Visualization with
+R}. Springer, New York. ISBN 978-0-387-75968-5,
+\url{http://lmdvr.r-forge.r-project.org}.
 }

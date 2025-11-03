@@ -22,9 +22,3 @@ test_that("evaluate_model returns confusion matrix and metrics", {
   expect_true(all(c("Accuracy") %in% names(output$metric)))
   expect_true(output$metric["Accuracy"] >= 0 && output$metric["Accuracy"] <= 1)
 })
-
-# test_that("evaluate_model errors on dimension of test set not matched with train set", {
-#
-#   expect_error(evaluate_model(trained_model=model, test_data=testset_bad))
-# })
-

@@ -1,16 +1,20 @@
-#' Load in Histological Features
+#' Load Histological Feature Embeddings
 #'
-#' A function that load in histological features extracted from any
-#' pathology foundation model. Optionally include labels
-#' given log-likelihood, number of clusters, dimensionality of the
-#' dataset and the number of observations.
+#' Load histology feature embeddings (rows = samples, columns = features)
+#' extracted from a pathology foundation model, and optionally attach sample
+#' labels. Feature columns are renamed to consecutive integers starting at 1.
 #'
-#' @param feature The matrix/data.frame; rows are samples
-#' @param label The vector or 1-col data.frame/matrix of labels (or NULL)
-#' @return Returns an object of class \code{"histofeature"}
+#' @param feature A numeric \code{matrix} or \code{data.frame} of features where
+#'   rows are samples/observations and columns are feature dimensions.
+#' @param label Optional labels for each sample. May be a vector, factor, or a
+#'   1-column \code{data.frame}/\code{matrix}. If supplied, its length must equal
+#'   \code{nrow(feature)}. Converted internally to a \code{factor}.
+#'
+#' @return An object of class \code{"histofeature"} with:
 #' \itemize{
-#'   \item feature - A data.frame of features with columns named "1","2",...
-#'   \item label - A factor of labels or \code{NULL}
+#'   \item \code{feature}: a \code{data.frame} of features with columns named
+#'         \code{"1"}, \code{"2"}, \code{"3"}, \ldots
+#'   \item \code{label}: a \code{factor} of labels or \code{NULL}
 #' }
 #'
 #' @examples
@@ -18,14 +22,9 @@
 #' data(train_labels)
 #' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 #'
-#' @references
-#'
-#' Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics}
-#' 6.
-#'
-#' Akaike, H. (1973). Information theory and an extension of the maximum likelihood
-#' principle. In \emph{Second International Symposium on Information Theory}, New York, NY,
-#' USA, pp. 267–281. Springer Verlag.
+#' @note
+#' Documentation and debugging processes were refined with the assistance
+#' of ChatGPT-5 to improve accuracy and clarity.
 #'
 #' @export
 load_embeddings <- function(feature, label = NULL) {

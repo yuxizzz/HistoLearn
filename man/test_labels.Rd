@@ -3,14 +3,24 @@
 \docType{data}
 \name{test_labels}
 \alias{test_labels}
-\title{Test labels (example data)}
+\title{Test Labels (Example Data)}
 \format{
-A factor or character vector like \code{train_labels}.
+A factor or character vector of length \eqn{n}, matching the rows in
+\code{\link{test_embeddings}}.
 }
 \usage{
 data(test_labels)
 }
 \description{
-Test labels (example data)
+Example class labels corresponding to \code{\link{test_embeddings}}.
+Each label specifies the diagnostic category for a test region of interest (ROI),
+used to assess model performance on unseen data.
+}
+\note{
+Documentation and code debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
+}
+\seealso{
+\code{\link{test_embeddings}}
 }
 \keyword{datasets}

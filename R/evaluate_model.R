@@ -1,15 +1,21 @@
-#' Evaluate model
+#' Evaluate Model Performance
 #'
-#' A function that calculates information criteria, BIC (Bayesian
-#' Information Criterion) and AIC (Akaike Information Criterion)
-#' given log-likelihood, number of clusters, dimensionality of the
-#' dataset and the number of observations.
+#' Evaluate a trained classification model on a test dataset. The function applies
+#' the model’s dimensionality-reduction transformation to the test features,
+#' generates predictions, computes overall accuracy, and visualizes the confusion
+#' matrix using \pkg{ggplot2}.
 #'
-#' @param trained_model A negative value of class numeric indicating
-#'   the log-likelihood.
-#' @param test_data A positive integer indicating the number of clusters.
+#' @param trained_model A fitted model object returned by \code{\link{train_model}}.
+#'   Must include components \code{dr_model}, \code{model}, and \code{dr_dim}.
+#' @param test_data An object of class \code{"histofeature"} created by
+#'   \code{\link{load_embeddings}}, containing test features and labels.
 #'
-#' @return a list
+#' @return
+#' A list containing:
+#' \itemize{
+#'   \item \code{conf_matrix} — a \code{ggplot} object showing the confusion matrix.
+#'   \item \code{metric} — a list with evaluation metrics (currently accuracy).
+#' }
 #'
 #' @examples
 #' data(train_embeddings)
@@ -21,14 +27,15 @@
 #' model <- train_model(feature_embedding=train_set,
 #'                       dr="pca", dr_k=20, model = "knn")
 #' evaluate_model(model, test_set)
+#'
 #' @references
 #'
-#' Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics}
-#' 6.
+#' Kuhn, M. (2008). Building Predictive Models in R Using the caret
+#' Package. Journal of Statistical Software, 28(5), 1–26.
+#' https://doi.org/10.18637/jss.v028.i05
 #'
-#' Akaike, H. (1973). Information theory and an extension of the maximum likelihood
-#' principle. In \emph{Second International Symposium on Information Theory}, New York, NY,
-#' USA, pp. 267–281. Springer Verlag.
+#' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+#' Springer-Verlag New York, 2016.
 #'
 #' @export
 #' @import caret ggplot2

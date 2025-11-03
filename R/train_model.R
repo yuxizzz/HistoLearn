@@ -26,6 +26,34 @@
 #' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 #' model <- train_model(feature_embedding=train_set,
 #'                       dr="pca", dr_k=20, model = "knn")
+#'
+#' @references
+#' Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
+#' Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
+#' Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber,
+#' G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose
+#' foundation model for computational pathology. Nature Medicine, 30(3), 850–862.
+#' https://doi.org/10.1038/s41591-024-02857-3
+#'
+#' Kuhn, M. (2008). Building Predictive Models in R Using the caret
+#' Package. Journal of Statistical Software, 28(5), 1–26.
+#' https://doi.org/10.18637/jss.v028.i05
+#'
+#' R Core Team (2025). _R: A Language and Environment for
+#' Statistical Computing_. R Foundation for Statistical Computing,
+#' Vienna, Austria. <https://www.R-project.org/>.
+#'
+#' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+#' Springer-Verlag New York, 2016.
+#'
+#' Sarkar D (2008). _Lattice: Multivariate Data Visualization with
+#' R_. Springer, New York. ISBN 978-0-387-75968-5,
+#' <http://lmdvr.r-forge.r-project.org>.
+#'
+#' @note
+#' Documentation and code debugging processes were refined with the assistance
+#' of ChatGPT-5 to improve accuracy and clarity.
+#'
 #' @export
 #' @import caret stats ggplot2 lattice
 train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = "knn") {
@@ -65,18 +93,29 @@ train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = "knn")
 
 #' Dimension Reduction Helper
 #'
-#' @description
 #' Performs dimensionality reduction on a numeric feature matrix.
 #' Currently, only Principal Component Analysis (PCA) is implemented.
 #'
-#' @param X numeric matrix
-#' @param method currently only "pca"
-#' @param k integer; number of components to keep
-#' @return A list containing:
+#' @param X A numeric matrix where rows represent samples and columns represent features.
+#' @param method A character string specifying the dimensionality reduction method.
+#'   Currently only \code{"pca"} is supported.
+#' @param k An integer specifying the number of components to retain.
+#'
+#' @return
+#' A list with the following elements:
 #' \itemize{
-#'   \item model — the fitted PCA model.
-#'   \item X_red — the matrix of reduced features.
+#'   \item \code{model} — the fitted PCA model.
+#'   \item \code{X_red} — the matrix of reduced-dimension features.
 #' }
+#' @references
+#' R Core Team (2025). _R: A Language and Environment for
+#' Statistical Computing_. R Foundation for Statistical Computing,
+#' Vienna, Austria. <https://www.R-project.org/>.
+#'
+#' @note
+#' Documentation and code debugging processes were refined with the assistance
+#' of ChatGPT-5 to improve accuracy and clarity.
+#'
 #' @import stats
 reduce_dim <- function(X, method = "pca", k = 20) {
   X_red <- X
@@ -92,15 +131,27 @@ reduce_dim <- function(X, method = "pca", k = 20) {
     stop("Unsupported dimension reduction method: ", method)
   }
 }
-#' Train a K-Nearest Neighbors (KNN) Classifier
+
+#' Train a k-Nearest Neighbors (k-NN) Classifier
 #'
-#' @description
-#' Internal helper function that trains and tunes a KNN model.
+#' Internal helper function that trains and tunes a k-Nearest Neighbors (k-NN)
+#' classification model using the \pkg{caret} package.
 #'
-#' @param X Matrix of predictor variables.
-#' @param y Factor of class labels corresponding to the rows of \code{X}.
+#' @param X A matrix or data frame of predictor variables.
+#' @param y A factor vector of class labels corresponding to the rows of \code{X}.
 #'
-#' @return The best fitted model using the best K.
+#' @return
+#' A fitted \code{knn3} model using the optimal value of \code{k} determined
+#' via cross-validation.
+#'
+#' @references
+#' Kuhn, M. (2008). Building Predictive Models in R Using the caret
+#' Package. Journal of Statistical Software, 28(5), 1–26.
+#' https://doi.org/10.18637/jss.v028.i05
+#'
+#' @note
+#' Documentation and code debugging processes were refined with the assistance
+#' of ChatGPT-5 to improve accuracy and clarity.
 #'
 #' @import caret
 train_knn <- function(X, y) {

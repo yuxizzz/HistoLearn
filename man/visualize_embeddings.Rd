@@ -2,25 +2,33 @@
 % Please edit documentation in R/visualize.R
 \name{visualize_embeddings}
 \alias{visualize_embeddings}
-\title{Visualize Embeddings using Reduced Dimensions}
+\title{Visualize Embeddings Using Reduced Dimensions}
 \usage{
 visualize_embeddings(input_data, dimensions = 2, type = "pca")
 }
 \arguments{
-\item{input_data}{an object of class \code{"histofeature"}}
+\item{input_data}{An object of class \code{"histofeature"} created by
+\code{\link{load_embeddings}}.}
 
-\item{dimensions}{A A positive integer indicating the dimension to visualize,
-ranging from 2 to 8. The default is \code{2}.}
+\item{dimensions}{A positive integer specifying the number of dimensions
+to visualize (between 2 and 8). Defaults to \code{2}.}
 
-\item{type}{The type of dimension reduction techniques to perform, currently
-only support \code{"pca"}.}
+\item{type}{The dimensionality reduction method to use. Currently only
+\code{"pca"} is supported.}
 }
 \value{
-A \code{ggplot} or \code{ggmatrix} object that visualized the relationship.
+A \code{ggplot} object (for 2D visualization) or a
+\code{ggmatrix} object (for multi-dimensional paired plots), displaying
+the projected embeddings colored by label.
 }
 \description{
-A function that creates a 2D scatterplot or a multi-dimensional paired plot
-of embeddings.
+Generate a 2D scatterplot or a multi-dimensional paired plot of histological
+feature embeddings using dimensionality reduction. Currently supports
+Principal Component Analysis (PCA) for projection.
+}
+\note{
+Documentation and debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
 }
 \examples{
 data(train_embeddings)
@@ -30,10 +38,16 @@ visualize_embeddings(train_set)
 
 }
 \references{
-Schwarz, G. (1978). Estimating the dimension of a model. \emph{The Annals of Statistics}
-6.
+R Core Team (2025). \emph{R: A Language and Environment for
+Statistical Computing}. R Foundation for Statistical Computing,
+Vienna, Austria. \url{https://www.R-project.org/}.
 
-Akaike, H. (1973). Information theory and an extension of the maximum likelihood
-principle. In \emph{Second International Symposium on Information Theory}, New York, NY,
-USA, pp. 267–281. Springer Verlag.
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+Springer-Verlag New York, 2016.
+
+Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E,
+Elberg A, Crowley J (2025). \emph{GGally: Extension to 'ggplot2'}.
+doi:10.32614/CRAN.package.GGally
+\url{https://doi.org/10.32614/CRAN.package.GGally}, R package
+version 2.4.0, \url{https://CRAN.R-project.org/package=GGally}.
 }

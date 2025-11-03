@@ -7,20 +7,30 @@
 reduce_dim(X, method = "pca", k = 20)
 }
 \arguments{
-\item{X}{numeric matrix}
+\item{X}{A numeric matrix where rows represent samples and columns represent features.}
 
-\item{method}{currently only "pca"}
+\item{method}{A character string specifying the dimensionality reduction method.
+Currently only \code{"pca"} is supported.}
 
-\item{k}{integer; number of components to keep}
+\item{k}{An integer specifying the number of components to retain.}
 }
 \value{
-A list containing:
+A list with the following elements:
 \itemize{
-\item model — the fitted PCA model.
-\item X_red — the matrix of reduced features.
+\item \code{model} — the fitted PCA model.
+\item \code{X_red} — the matrix of reduced-dimension features.
 }
 }
 \description{
 Performs dimensionality reduction on a numeric feature matrix.
 Currently, only Principal Component Analysis (PCA) is implemented.
+}
+\note{
+Documentation and code debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
+}
+\references{
+R Core Team (2025). \emph{R: A Language and Environment for
+Statistical Computing}. R Foundation for Statistical Computing,
+Vienna, Austria. \url{https://www.R-project.org/}.
 }

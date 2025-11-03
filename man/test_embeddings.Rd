@@ -3,14 +3,36 @@
 \docType{data}
 \name{test_embeddings}
 \alias{test_embeddings}
-\title{Test embeddings (example data)}
+\title{Test Embeddings (Example Data)}
 \format{
-A data.frame like \code{train_embeddings}.
+A \code{data.frame} with 45 rows (samples) and 1024 columns (features).
 }
 \usage{
+data(train_embeddings)
+
 data(test_embeddings)
 }
 \description{
-Test embeddings (example data)
+Example histopathology feature embeddings used for model evaluation. These
+embeddings share the same structure and nine-class tissue representation as
+\code{\link{train_embeddings}}, derived from 86 FFPE colorectal slides released
+by Kather, Halama, and Marx (2018) and processed using the pathology foundation
+model introduced by Chen et al. (2024).
+}
+\note{
+Documentation and code debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
+}
+\references{
+Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
+Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
+Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber,
+G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose
+foundation model for computational pathology. Nature Medicine, 30(3), 850–862.
+https://doi.org/10.1038/s41591-024-02857-3
+
+Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of
+human colorectal cancer and healthy tissue (v0.1) [Data set]. Zenodo.
+https://doi.org/10.5281/zenodo.1214456
 }
 \keyword{datasets}

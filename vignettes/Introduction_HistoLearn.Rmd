@@ -50,6 +50,7 @@ lsf.str("package:HistoLearn")
 <br>
 
 ## Example Usage
+The embeddings represent nine colorectal tissue classes— adipose, background, debris, lymphocytes, mucus, smooth muscle, normal mucosa, cancer-associated stroma, and tumor epithelium—derived from 86 FFPE colorectal slides released by Kather, Halama, and Marx (2018) and processed using the foundation model introduced by Chen et al. (2024). The workflow is inspired by Chen et al. (2024).
 
 ### Load the data
 
@@ -88,27 +89,17 @@ evaluate_model(trained_model=model, test_data = testset)
 
 ## References
 
--   [Aitchison, J. and C. H. Ho (1989). The multivariate Poisson-log normal distribution. Biometrika 76.](https://www.jstor.org/stable/2336624?seq=1)
+```
+Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., 
+Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
+Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber, 
+G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose
+foundation model for computational pathology. Nature Medicine, 30(3), 850–862.
+https://doi.org/10.1038/s41591-024-02857-3
 
--   [Aitken, A. C. (1926). A series formula for the roots of algebraic and transcendental equations. *Proceedings of the Royal Society of Edinburgh*](https://www.cambridge.org/core/journals/proceedings-of-the-royal-society-of-edinburgh/article/iiia-series-formula-for-the-roots-of-algebraic-and-transcendental-equations/0CC96A97C8B634E2730F5208E506E6A9)
-
--   [Akaike, H. (1973). Information theory and an extension of the maximum likelihood principle. In *Second International Symposium on Information Theory*, New York, NY, USA, pp. 267–281. Springer Verlag.](https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15)
-
--   [Biernacki, C., G. Celeux, and G. Govaert (2000). Assessing a mixture model for clustering with the integrated classification likelihood. *IEEE Transactions on Pattern Analysis and Machine Intelligence*.](https://hal.inria.fr/inria-00073163/document)
-
--   [B¨ohning, D., E. Dietz, R. Schaub, P. Schlattmann, and B. Lindsay (1994). The distribution of the likelihood ratio for mixtures of densities from the one-parameter exponential family. *Annals of the Institute of Statistical Mathematics*](https://link.springer.com/article/10.1007/BF01720593)
-
--   [Bozdogan, H. (1994). Mixture-model cluster analysis using model selection criteria and a new informational measure of complexity. In *Proceedings of the First US/Japan Conference on the Frontiers of Statistical Modeling: An Informational Approach: Volume 2 Multivariate Statistical Modeling*, pp. 69–113. Dordrecht: Springer Netherlands.](https://link.springer.com/chapter/10.1007/978-94-011-0800-3_3)
-
--   Campbell, J., C. Fraley, F. Murtagh, and A. Raftery (1997). Linear flaw detection in woven textiles using model-based clustering. *Pattern Recognition Letters*.
-
--   [Dempster, A. P., N. M. Laird, and D. B. Rubin (1977). Maximum likelihood from incomplete data via the EM algorithm. *Journal of the Royal Statistical Society: Series B*](https://www.ece.iastate.edu/~namrata/EE527_Spring08/Dempster77.pdf)
-
--   Katz, R. W. (1981). On some criteria for estimating the order of a Markov chain. *Technometrics*.
-
--   [Schwarz, G. (1978). Estimating the dimension of a model. *The Annals of Statistics* 6.](https://www.jstor.org/stable/2958889?seq=1)
-
--   Shibata, R. (1976). Selection of the order of an autoregressive model by Akaike’s information criterion. *Biometrika*.
+Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of
+human colorectal cancer and healthy tissue (v0.1) \[Data set\]. Zenodo. https://doi.org/10.5281/zenodo.1214456
+```
 
 ------------------------------------------------------------------------
 
