@@ -1,16 +1,25 @@
 Package: HistoLearn
 Type: Package
-Title: What the Package Does (Title Case)
+Title: HistoLearn: A R Package Interpreting and Visualizing Foundation Model Derived Histological Features
 Version: 0.1.0
-Authors@R: c(
-    person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
+Authors@R: 
+    c(
+      person(
+        "Yuxi", "Zhu",
+        email = "yuxi.zhu@mail.utoronto.ca",
+        role = c("aut", "cre")
+      )
     )
-  )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: HistoLearn provides a workflow for computational pathology that 
+    integrates downstream analysis (including interpretation, visualization, 
+    and modeling) of H&E embeddings generated from pathology foundation models. 
+    It enables users to load H&E embeddings with their class labels, perform 
+    dimensionality reduction, train classifiers, and evaluate performance. The 
+    package implements a simple pipeline combining principal component analysis 
+    (PCA) and k-nearest neighbors (kNN), inspired by the common workflows used 
+    in pathology foundation models (Chen et al., 2024). HistoLearn offers an 
+    all-in-one framework for the interpretation and predictive modeling of 
+    high-dimensional histological embeddings.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

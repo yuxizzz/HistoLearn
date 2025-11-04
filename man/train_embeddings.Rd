@@ -18,7 +18,7 @@ foundation model. The embeddings represent nine colorectal tissue classes—
 adipose, background, debris, lymphocytes, mucus, smooth muscle, normal mucosa,
 cancer-associated stroma, and tumor epithelium—derived from 86 FFPE colorectal
 slides released by Kather, Halama, and Marx (2018) and processed using the
-foundation model introduced by Chen et al. (2024).
+foundation model or feature encoder introduced by Chen et al. (2024).
 }
 \note{
 Documentation and code debugging processes were refined with the assistance

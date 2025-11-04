@@ -2,22 +2,24 @@
 
 ## Description:
 The clinical practice of pathology involves tasks such as tumor detection and 
-stage classification on H&E-stained tissue images. With the advancement of AI 
+stage classification on hematoxylin and eosin (H&E) tissue images. With the advancement of AI 
 and computational biology, many of these tasks can now be automated. Recently 
-developed foundation models, or general-purpose encoders, can process regions of 
-interest (ROIs) or whole-slide images (WSIs) and generate high-dimensional 
-feature embeddings that capture complex histological patterns. These embeddings 
-can then serve as inputs for downstream analyses and predictive modeling, including 
-classification and segmentation tasks (Chen et al., 2024).
+developed pathology foundation models, or general-purpose encoders, 
+can process regions of  interest (ROIs) or whole-slide images (WSIs) and 
+generate high-dimensional feature embeddings that summarize histological 
+patterns. These embeddings can then serve as inputs for downstream analyses 
+and predictive modeling, including classification and segmentation tasks (Chen et al., 2024).
 
-HistoLearn provides a lightweight and modular workflow for computational pathology
-that integrates essential steps such as feature handling, interpretation, and model training. 
-It enables users to load hematoxylin and eosin (H&E) embeddings with their class labels, 
-perform dimensionality reduction, train classifiers, and evaluate performance. The 
-package implements a simple yet effective pipeline combining principal component analysis (PCA) and 
-k-nearest neighbors (kNN), inspired by workflows used in pathology foundation 
-models (Chen et al., 2024). HistoLearn offers an all-in-one framework for the 
-interpretation and predictive modeling of high-dimensional histological embeddings.
+HistoLearn provides a workflow for computational pathology that integrates 
+downstream analysis (including interpretation, visualization, and modeling) of 
+H&E embeddings generated from pathology foundation models. It enables users to 
+load H&E embeddings with their class labels, perform dimensionality reduction, 
+train classifiers, and evaluate performance. The package implements a simple 
+pipeline combining principal component analysis (PCA) and k-nearest neighbors 
+(kNN), inspired by the common workflows used in pathology foundation models 
+(Chen et al., 2024). HistoLearn offers an all-in-one framework for the 
+interpretation and predictive modeling of high-dimensional histological 
+embeddings.
 
 This package was developed under R 4.5.1 (2025-06-13) on macOS Sonoma
 14.5 (aarch64-apple-darwin20).
@@ -37,16 +39,7 @@ To run the shinyApp: Under construction
 
 ## Overview:
 
-Provide the following commands, customized to your R package. Then
-provide a list of user accessible functions within the package in order
-of use and a brief description of each. Include one image illustrating
-the overview of the package that shows the inputs and outputs. Ensure
-the image is deposited in the correct location, as discussed in class.
-Point the user to vignettes for a tutorial of your package. For an
-example, see TestingPackage.
-
-Full tutorial on vignettes.
-
+Full tutorial is available on vignettes.
 ```         
 ls("package:HistoLearn")
 data(package = "HistoLearn")
@@ -76,8 +69,8 @@ Kather et al. (2018).
 -   `train_embeddings`, `train_labels` — training set (9 human
     colorectal cancer issue classes) from Kather, Halama, and Marx
     (2018).
--   `test_embeddings`, `test_labels` — independent test set for model
-    evaluation.
+-   `test_embeddings`, `test_labels` — independent test set of same structure as 
+the training set for model evaluation.
 
 ## Contributions:
 
@@ -86,10 +79,10 @@ by the common practice outlined in Chen et al. (2024). All documentation and
 example workflows were written by Yuxi Zhu. The example data is derived from 
 Kather et al. (2018) and processed using the pathology foundation model UNI 
 from Chen et al. (2024). The author conducted data preprocessing to prepare 
-example embeddings and structured training/test datasets. The stats package 
-is used for PCA computation; caret is used for k-NN model training and 
-cross-validation. ggplot2 and GGally are used for visualization. 
-ChatGPT-5 from OpenAI was used to polish and format documentation, debug code, 
+example embeddings and structured training/test datasets. The `stats` package 
+is used for PCA computation; `caret` is used for k-NN model training and 
+cross-validation. `ggplot2` and `GGally` are used for visualization. 
+`ChatGPT-5` from OpenAI was used to polish and format documentation, debug code, 
 and look up functions.
 
 ## References:
