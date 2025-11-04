@@ -1,27 +1,23 @@
 # HistoLearn
 
 ## Description:
+The clinical practice of pathology involves tasks such as tumor detection and 
+stage classification on H&E-stained tissue images. With the advancement of AI 
+and computational biology, many of these tasks can now be automated. Recently 
+developed foundation models, or general-purpose encoders, can process regions of 
+interest (ROIs) or whole-slide images (WSIs) and generate high-dimensional 
+feature embeddings that capture complex histological patterns. These embeddings 
+can then serve as inputs for downstream analyses and predictive modeling, including 
+classification and segmentation tasks (Chen et al., 2024).
 
-A paragraph that describes the purpose of your R package and biological
-data being analyzed. Explain how your package add to or improve a
-current work flow in bioinformatics or computa- tional biology (i.e.,
-how is it unique?, what issue does it address?). Finally, include the R
-version (not RStudio version) and platform (Mac, Windows, Linux (Debian,
-Fedora/Redhat, Ubuntu)), used to develop the package. You may obtain
-this information by running utils::sessionInfo(). There should be no
-Shiny implementation at this point.
-
-HistoLearn provides a lightweight, modular workflow for computational
-pathology that integrates core steps of feature handling and model
-evaluation: loading H&E region-of-interest (ROI) embeddings, performing
-dimensionality reduction, training a classifier, and assessing
-performance. The package implements a simple yet reproducible PCA + k-NN
-pipeline inspired by common workflows for pathology foundation models
-(Chen et al., 2024). Key strengths include: - A minimalist pipeline for
-interpreting high-dimensional histological features derived from
-pathology foundation models. - One-line downstream training of a
-supervised machine-learning model. - Intuitive visualization of
-embedding spaces through PCA-based projections and pairwise plots.
+HistoLearn provides a lightweight and modular workflow for computational pathology
+that integrates essential steps such as feature handling, interpretation, and model training. 
+It enables users to load hematoxylin and eosin (H&E) embeddings with their class labels, 
+perform dimensionality reduction, train classifiers, and evaluate performance. The 
+package implements a simple yet effective pipeline combining principal component analysis (PCA) and 
+k-nearest neighbors (kNN), inspired by workflows used in pathology foundation 
+models (Chen et al., 2024). HistoLearn offers an all-in-one framework for the 
+interpretation and predictive modeling of high-dimensional histological embeddings.
 
 This package was developed under R 4.5.1 (2025-06-13) on macOS Sonoma
 14.5 (aarch64-apple-darwin20).
@@ -53,11 +49,16 @@ Full tutorial on vignettes.
 
 ```         
 ls("package:HistoLearn")
-data(package = "HistoLearn") # optional
+data(package = "HistoLearn")
 browseVignettes("HistoLearn")
 ```
 
 ### Overview diagram
+
+![Workflow overview](inst/workflow.png)
+The workflow diagram is drawn using BioRender and the example H&E images are from
+Kather et al. (2018). 
+
 
 ### Main functions
 
@@ -65,7 +66,7 @@ browseVignettes("HistoLearn")
 |---------------------------------|---------------------------------------|
 | `load_embeddings(feature, label = NULL)` | Load features and labels into a `"histofeature"` object with validation. |
 | `visualize_embeddings(input_data, dimensions = 2, type = "pca")` | Perform PCA projection and generate 2D or pairwise embedding plots. |
-| `train_model(feature_embedding, dr = "pca", dr_k = 20, model = "knn")` | Apply PCA reduction and train a k-NN classifier. |
+| `train_model(feature_embedding, dr = "pca", dr_k = 20, model = "knn")` | Apply PCA reduction and train a k-NN classifier. Output a `histolearn` object for the final model. |
 | `evaluate_model(trained_model, test_data)` | Evaluate predictions on a test set, visualize confusion matrix, and compute accuracy. |
 | `reduce_dim(X, method = "pca", k = 20)` | Internal helper for PCA-based dimensionality reduction. |
 | `train_knn(X, y)` | Internal helper for k-NN tuning and model fitting. |
@@ -80,30 +81,16 @@ browseVignettes("HistoLearn")
 
 ## Contributions:
 
--   Provide a paragraph clearly indicating the name of the author of the
-    package and contri- butions from the author.
--   Outline contributions from other packages/sources for each function.
--   Outline contributions from generative AI tool(s) for each function.
-    Include how the tools were used and how the results from AI tools
-    were incorporated.
--   Remember your individual contributions to the package are important.
-
-Author: Yuxi Zhu
-- Designed and implemented the full codebase and pipeline for the package.
-- Conducted data preprocessing to prepare example embeddings and structured training/test datasets.
-- Authored all documentation, vignettes, and example workflows.
-
-External package contributions
-- stats: PCA computation. 
-- caret: k-NN model training and cross-validation. 
-- ggplot2, GGally: visualization functions. 
-
-Example data 
-- derived from Kather et al. (2018) and processed using the pathology foundation model from Chen et
-al. (2024).
-
-Use of generative AI (ChatGPT-5) 
-- Used to refine documentation formatting, debugging code and looking up functions 
+This package was designed and implemented by Yuxi Zhu. The workflow is inspired 
+by the common practice outlined in Chen et al. (2024). All documentation and 
+example workflows were written by Yuxi Zhu. The example data is derived from 
+Kather et al. (2018) and processed using the pathology foundation model UNI 
+from Chen et al. (2024). The author conducted data preprocessing to prepare 
+example embeddings and structured training/test datasets. The stats package 
+is used for PCA computation; caret is used for k-NN model training and 
+cross-validation. ggplot2 and GGally are used for visualization. 
+ChatGPT-5 from OpenAI was used to polish and format documentation, debug code, 
+and look up functions.
 
 ## References:
 
