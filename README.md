@@ -48,7 +48,7 @@ browseVignettes("HistoLearn")
 
 ### Overview diagram
 
-![Workflow overview](inst/workflow.png)
+![Workflow overview](inst/extdata/workflow.png)
 The workflow diagram is drawn using BioRender and the example H&E images are from
 Kather et al. (2018). 
 
@@ -61,8 +61,6 @@ Kather et al. (2018).
 | `visualize_embeddings(input_data, dimensions = 2, type = "pca")` | Perform PCA projection and generate 2D or pairwise embedding plots. |
 | `train_model(feature_embedding, dr = "pca", dr_k = 20, model = "knn")` | Apply PCA reduction and train a k-NN classifier. Output a `histolearn` object for the final model. |
 | `evaluate_model(trained_model, test_data)` | Evaluate predictions on a test set, visualize confusion matrix, and compute accuracy. |
-| `reduce_dim(X, method = "pca", k = 20)` | Internal helper for PCA-based dimensionality reduction. |
-| `train_knn(X, y)` | Internal helper for k-NN tuning and model fitting. |
 
 ### Example Data
 
