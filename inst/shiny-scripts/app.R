@@ -100,10 +100,10 @@ ui <- fluidPage(
         ),
         tabPanel(
           "Model performance",
-          h4("Confusion matrix"),
+          h4("Test Set Confusion matrix"),
           plotOutput("cm_plot"),
           tags$hr(),
-          h4("Metrics"),
+          h4("Test Set Metrics"),
           verbatimTextOutput("metric_text")
         )
       )
