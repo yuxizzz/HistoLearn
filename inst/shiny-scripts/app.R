@@ -6,6 +6,32 @@ ui <- fluidPage(
 
   sidebarLayout(
     sidebarPanel(
+      tags$p("Description: This Shiny App is part of the HistoLearn R package.
+       It provides an interactive interface for exploring, visualizing, and modeling
+       histological feature embeddings derived from computational pathology foundation models.
+       Users can upload embedding matrices and corresponding sample labels, construct
+       'histofeature' objects, and generate dimensionality-reduced visualizations using PCA.
+       The app also supports supervised learning through the HistoLearn modeling pipeline,
+       enabling users to perform dimensionality reduction, train k-nearest neighbor (kNN)
+       classifiers, and evaluate model performance on test data. Model evaluation includes
+       confusion matrices and accuracy metrics. Overall, the HistoLearn Shiny App offers a
+       streamlined, user-friendly platform for embedding inspection, exploratory analysis,
+       classification training, and performance assessment in computational histopathology."
+             ),
+      # br() element to introduce extra vertical spacing
+      br(),
+
+      # input
+      tags$b("Instructions: Begin by uploading a feature embedding matrix and the
+        corresponding label file. After loading the data, you may visualize the
+        embeddings using PCA by selecting the number of dimensions and clicking
+        'Visualize embeddings'. To train a classifier, specify the training
+        proportion, reduced dimensionality, and model type, then press 'Train
+        model & evaluate'. Navigate through the tabs on the right to view the
+        embedding visualization, confusion matrix, and evaluation metrics."),
+
+      # br() element to introduce extra vertical spacing ----
+      br(),
       h4("1. Upload data"),
 
       fileInput(
