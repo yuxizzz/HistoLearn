@@ -1,6 +1,3 @@
-# app.R for HistoLearn Shiny interface
-# Location: inst/shiny-scripts/app.R
-
 library(shiny)
 library(ggplot2)
 
@@ -90,7 +87,7 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
 
-  # ---- Reactives: load raw feature + label data ----
+  # Reactives: load raw feature + label data ----
 
   feature_df <- reactive({
     req(input$feature_file)
@@ -150,7 +147,7 @@ server <- function(input, output, session) {
     as.vector(lab_df[[1]])
   })
 
-  # ---- Preview outputs ----
+  # Preview outputs
 
   output$feature_head <- renderTable({
     df <- feature_df()
@@ -164,7 +161,7 @@ server <- function(input, output, session) {
     head(data.frame(label = lab))
   })
 
-  # ---- Construct histofeature object using load_embeddings() ----
+  # Construct histofeature object
 
   histofeature_obj <- reactive({
     feat <- feature_df()
@@ -182,8 +179,6 @@ server <- function(input, output, session) {
       return(NULL)
     }
 
-    # This is YOUR function:
-    # load_embeddings(feature, label)
     hf <- HistoLearn::load_embeddings(
       feature = feat,
       label   = lab
@@ -192,7 +187,7 @@ server <- function(input, output, session) {
     hf
   })
 
-  # ---- Visualization using visualize_embeddings() ----
+  # Visualization using visualize_embeddings()
 
   viz_obj <- reactiveVal(NULL)
 
@@ -221,7 +216,7 @@ server <- function(input, output, session) {
     print(vis)
   })
 
-  # ---- Model training & evaluation using train_model() + evaluate_model() ----
+  # ---- Model training & evaluation ----
 
   trained_model_rv <- reactiveVal(NULL)
   eval_result_rv   <- reactiveVal(NULL)
@@ -260,7 +255,7 @@ server <- function(input, output, session) {
     feature_test  <- feature[-train_idx, , drop = FALSE]
     label_test    <- label[-train_idx]
 
-    # histofeature train/test using your constructor
+    # histofeature train/test
     hf_train <- HistoLearn::load_embeddings(
       feature = feature_train,
       label   = label_train
@@ -271,7 +266,7 @@ server <- function(input, output, session) {
       label   = label_test
     )
 
-    # Train model (your function)
+    # Train model
     tm <- HistoLearn::train_model(
       feature_embedding = hf_train,
       dr    = "pca",
@@ -281,7 +276,7 @@ server <- function(input, output, session) {
 
     trained_model_rv(tm)
 
-    # Evaluate model (your function)
+    # Evaluate mode
     ev <- HistoLearn::evaluate_model(
       trained_model = tm,
       test_data     = hf_test
