@@ -2,6 +2,7 @@
 
 export(evaluate_model)
 export(load_embeddings)
+export(runHistoLearn)
 export(train_model)
 export(visualize_embeddings)
 import(GGally)
@@ -9,3 +10,4 @@ import(caret)
 import(ggplot2)
 import(lattice)
 import(stats)
+importFrom(shiny,runApp)
