@@ -1,3 +1,6 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # HistoLearn
 
 ## Description:
@@ -57,48 +60,19 @@ al. (2018).
 
 ### Main functions
 
-<table>
-<colgroup>
-<col style="width: 45%" />
-<col style="width: 54%" />
-</colgroup>
-<thead>
-<tr>
-<th>Function</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>load_embeddings(feature, label = NULL)</code></td>
-<td>Load features and labels into a <code>"histofeature"</code> object
-with validation.</td>
-</tr>
-<tr>
-<td><code>visualize_embeddings(input_data, dimensions = 2, type = "pca")</code></td>
-<td>Perform PCA projection and generate 2D or pairwise embedding
-plots.</td>
-</tr>
-<tr>
-<td><code>train_model(feature_embedding, dr = "pca", dr_k = 20, model = "knn")</code></td>
-<td>Apply PCA reduction and train a k-NN classifier. Output a
-<code>histolearn</code> object for the final model.</td>
-</tr>
-<tr>
-<td><code>evaluate_model(trained_model, test_data)</code></td>
-<td>Evaluate predictions on a test set, visualize confusion matrix, and
-compute accuracy.</td>
-</tr>
-</tbody>
-</table>
+| Function | Description |
+|----|----|
+| `load_embeddings(feature, label = NULL)` | Load features and labels into a `"histofeature"` object with validation. |
+| `visualize_embeddings(input_data, dimensions = 2, type = "pca")` | Perform PCA projection and generate 2D or pairwise embedding plots. |
+| `train_model(feature_embedding, dr = "pca", dr_k = 20, model = "knn")` | Apply PCA reduction and train a k-NN classifier. Output a `histolearn` object for the final model. |
+| `evaluate_model(trained_model, test_data)` | Evaluate predictions on a test set, visualize confusion matrix, and compute accuracy. |
 
 ### Example Data
 
--   `train_embeddings`, `train_labels` — training set (9 human
-    colorectal cancer issue classes) from Kather, Halama, and Marx
-    (2018).
--   `test_embeddings`, `test_labels` — independent test set of same
-    structure as the training set for model evaluation.
+- `train_embeddings`, `train_labels` — training set (9 human colorectal
+  cancer issue classes) from Kather, Halama, and Marx (2018).
+- `test_embeddings`, `test_labels` — independent test set of same
+  structure as the training set for model evaluation.
 
 ## Contributions:
 
