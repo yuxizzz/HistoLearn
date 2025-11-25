@@ -23,9 +23,9 @@ ui <- fluidPage(
       br(),
 
       # input
-      tags$b("Instructions: Begin by uploading a feature embedding matrix and the
-        corresponding label file. After loading the data, you may visualize the
-        embeddings using PCA by selecting the number of dimensions and clicking
+      tags$b("Instructions: Begin by uploading a feature embedding matrix
+      (rows = samples, columns = features) and the corresponding label file.
+      After loading the data, you may visualize the embeddings using PCA by selecting the number of dimensions and clicking
         'Visualize embeddings'. To train a classifier, specify the training
         proportion, reduced dimensionality, and model type, then press 'Train
         model & evaluate'. Navigate through the tabs on the right to view the
@@ -35,15 +35,20 @@ ui <- fluidPage(
       br(),
       h4("1. Upload data"),
 
+      tags$p("Please upload a file (csv or tsv) containing your feature embeddings
+      and another file containing your labels for the feature embeddings.
+             Note: In the feature embeddings file, the row should correspond to
+             a sample and each column to a feature. The label_file should only contain 1 column."),
+
       fileInput(
         "feature_file",
-        "Upload feature embeddings (CSV)",
+        "Upload feature embeddings",
         accept = c(".csv", "text/csv", "text/comma-separated-values")
       ),
 
       fileInput(
         "label_file",
-        "Upload labels (CSV, one column)",
+        "Upload labels (one column)",
         accept = c(".csv", "text/csv", "text/comma-separated-values")
       ),
 

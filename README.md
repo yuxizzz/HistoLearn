@@ -42,6 +42,8 @@ To run the shinyApp:
 
     HistoLearn::runHistoLearn()
 
+The example data for shinyApp can be found under `inst\extdata` folder.
+
 ## Overview:
 
 Full tutorial is available on vignettes.
@@ -54,7 +56,10 @@ Full tutorial is available on vignettes.
 
 ![Workflow overview](inst/extdata/workflow.png) The workflow diagram is
 drawn using BioRender and the example H&E images are from Kather et
-al. (2018).
+al. (2018), The workflow diagram is drawn using BioRender and the
+example colorectal cancer H&E images are fromKather et al. (2018), where
+BACK represent class background, ADI represent class Adipose,(DEB
+represent debris.
 
 ### Main functions
 
@@ -77,11 +82,12 @@ al. (2018).
 This package was designed and implemented by Yuxi Zhu. The workflow is
 inspired by the common practice outlined in Chen et al. (2024). All
 documentation and example workflows were written by Yuxi Zhu. The
-example data is derived from Kather et al. (2018) and processed using
-the pathology foundation model UNI from Chen et al. (2024). The author
-conducted data preprocessing to prepare example embeddings and
-structured training/test datasets. ChatGPT-5 is used to generate the
-template for Shiny app and it was fine-tuned by Yuxi Zhu.
+example data and the demo data for shinyApp are derived from Kather et
+al. (2018) and processed using the pathology foundation model UNI from
+Chen et al. (2024). The author conducted data preprocessing to prepare
+example embeddings and structured training/test datasets. ChatGPT-5 is
+used to generate the template for Shiny app and it was fine-tuned by
+Yuxi Zhu.
 
 The `stats` package is used for principal component analysis (PCA). The
 `caret` package is used for k-nearest neighbors (k-NN) model training

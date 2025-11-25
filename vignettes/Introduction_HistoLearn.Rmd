@@ -31,7 +31,7 @@ set.seed(1) # for exact reproducibility
 
 ## Introduction
 
-**HistoLearn** is a simple R package for interpreting and visualizing foundation model derived histological features and training supervised machine learning models using these features. The function ***load_embeddings*** takes in the feature matrix or dataframe with each row representing a sample and, optionally, a label dataframe or matrix that specify the labels for each sample and create a **histofeature** object for downstream analysis. Function ***visualize_embeddings*** allows the user to visualize the embeddings of type **histofeature** using PCA and umap (where umap is still under construction). Function ***train_model*** allows the user to first use dimensional reduction method to reduce the dimension and train a supervised machine learning model to conduct classifications. **evaludate_model** is available for evaluating and inferring the model on testing data of same structure. The shiny implementation of *HistoLearn* is available as ***HistoLearn*** (under construction). For more information, see details below. **This document gives a tour of HistoLearn (version 0.1.0) functionalities**. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production.
+**HistoLearn** is a simple R package for interpreting and visualizing foundation model derived histological features and training supervised machine learning models using these features. The function ***load_embeddings*** takes in the feature matrix or dataframe with each row representing a sample and, optionally, a label dataframe or matrix that specify the labels for each sample and create a **histofeature** object for downstream analysis. Function ***visualize_embeddings*** allows the user to visualize the embeddings of type **histofeature** using PCA. Function ***train_model*** allows the user to first use dimensional reduction method to reduce the dimension and train a supervised machine learning model to conduct classifications. **evaludate_model** is available for evaluating and inferring the model on testing data of same structure. The shiny implementation of *HistoLearn* is available as ***HistoLearn*** (under construction). For more information, see details below. **This document gives a tour of HistoLearn (version 0.1.0) functionalities**. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production.
 
 See `help(package = "HistoLearn")` for further details and references provided by `citation("HistoLearn")`. To download **HistoLearn**, use the following commands:
 
@@ -66,7 +66,7 @@ trainset <- HistoLearn::load_embeddings(feature=HistoLearn::train_embeddings, la
 testset <- HistoLearn::load_embeddings(feature=HistoLearn::test_embeddings, label=HistoLearn::test_labels)
 ```
 
-## 2. Visualize Data
+### 2. Visualize Data
 
 We will first visualize the pca embeddings of the histological feature. Ideally, we want to see that dots of the same label to be clustered together.
 
@@ -82,7 +82,7 @@ Visualize first 4 dimensions of pca using a paired plot. Here we examine whether
 visualize_embeddings(input_data=trainset, dimensions = 4, type='pca')
 ```
 
-## 3. Train and Evaluate the Classification Models
+### 3. Train and Evaluate the Classification Models
 
 Now, we are training the downstream classification model using the default PCA and KNN.
 By default, train_model will perform PCA for dimensionality reduction, retains the specified number of components (`dr_k`) and fits a kNN classifier on the reduced embeddings.
