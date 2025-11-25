@@ -1,19 +1,21 @@
 #' Visualize Embeddings Using Reduced Dimensions
 #'
-#' Generate a 2D scatterplot or a multi-dimensional paired plot of histological
-#' feature embeddings using dimensionality reduction. Currently supports
-#' Principal Component Analysis (PCA) for projection.
+#' Project histological feature embeddings to a low-dimensional space and
+#' visualize them as either a 2D scatterplot (when \code{dimensions = 2}) or
+#' a matrix of pairwise scatterplots (when \code{dimensions > 2}). The function
+#' currently uses Principal Component Analysis (PCA) for dimensionality
+#' reduction and colors points by their associated labels.
 #'
-#' @param input_data An object of class \code{"histofeature"} created by
-#'   \code{\link{load_embeddings}}.
-#' @param dimensions A positive integer specifying the number of dimensions
-#'   to visualize (between 2 and 8). Defaults to \code{2}.
-#' @param type The dimensionality reduction method to use. Currently only
-#'   \code{"pca"} is supported.
-#'
-#' @return A \code{ggplot} object (for 2D visualization) or a
-#'   \code{ggmatrix} object (for multi-dimensional paired plots), displaying
-#'   the projected embeddings colored by label.
+#' @param input_data An object of class \code{"histofeature"} as returned by
+#'   \code{\link{load_embeddings}}. It must contain a numeric feature matrix
+#'   in \code{input_data$feature} and a non-\code{NULL} label vector/factor in
+#'   \code{input_data$label}.
+#' @param dimensions Integer scalar specifying the number of dimensions to
+#'   visualize. Must be between \code{2} and \code{10}. If the requested number
+#'   of dimensions exceeds the number of available principal components, the
+#'   maximum available is used instead.
+#' @param type Character string indicating the dimensionality reduction method.
+#'   Currently only \code{"pca"} is supported.
 #'
 #' @examples
 #' data(train_embeddings)
@@ -35,6 +37,9 @@
 #' <https://doi.org/10.32614/CRAN.package.GGally>, R package
 #' version 2.4.0, <https://CRAN.R-project.org/package=GGally>.
 #'
+#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+#' (Large language model). <https://chat.openai.com/>
+#'
 #' @note
 #' Documentation and debugging processes were refined with the assistance
 #' of ChatGPT-5 to improve accuracy and clarity.
@@ -44,38 +49,39 @@
 visualize_embeddings <- function(input_data,
                                   dimensions=2,
                                   type='pca') {
+  # Validate input_data object
   if (!inherits(input_data, "histofeature")) {
     stop("invalid input", call. = FALSE)
   }
-
+  # Convert dimensions to integer for safety
   k <- as.integer(dimensions)
+  # input checking
   if (k > 10 || k < 2) {
-    stop("Not informative or invalid. Choose dimension within 2 to 8", call.=TRUE)
-  }
-  if (is.null(input_data$label)){
-    stop("Require cluster label", call.=TRUE)
+    stop("Not informative or invalid. Choose dimension within 2 to 10", call.=TRUE)
   }
 
+  # Dimensionality reduction (currently supports only PCA)
   if (type=='pca') {
     pca_result <- stats::prcomp(input_data$feature, center = TRUE, scale. = TRUE)
     k <- min(k, ncol(pca_result$x))
-
     reduced_dim <- as.data.frame(pca_result$x[, seq_len(k), drop = FALSE])
     colnames(reduced_dim) <- paste0("dim", seq_len(k))
-    reduced_dim$Label <- input_data$label
+    reduced_dim$label <- input_data$label
   } else {
     stop("not supported", call.= FALSE)
   }
-
+  # Visualization: ore than 2 dimensions -> produce GGally pairwise scatterplot matrix
   if (k > 2) {
     p <- GGally::ggpairs(
       reduced_dim,
       columns = seq_len(k),
-      aes(color = Label)) +
+      aes(color = reduced_dim$label)) +
       ggplot2::theme_minimal() +
       ggplot2::ggtitle(paste("Paired", type, " projection with dimension of", k))
   } else {
-    p <- ggplot2::ggplot(reduced_dim, aes(dim1, dim2, color = Label)) +
+    # Exactly 2 dimensions -> produce 2D scatterplot
+    p <- ggplot2::ggplot(reduced_dim, aes(reduced_dim$dim1, reduced_dim$dim2,
+                                          color = reduced_dim$label)) +
       ggplot2::geom_point(size = 2, alpha = 0.8) +
       ggplot2::theme_minimal() +
       ggplot2::ggtitle(paste(type, " projection with dimension of", k))

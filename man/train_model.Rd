@@ -4,33 +4,50 @@
 \alias{train_model}
 \title{Train a classifier on embeddings}
 \usage{
-train_model(feature_embedding, dr = "pca", dr_k = 20, model = "knn")
+train_model(
+  feature_embedding,
+  dr = "pca",
+  dr_k = 20,
+  model = c("knn", "logistic")
+)
 }
 \arguments{
-\item{feature_embedding}{An object of class \code{"histofeature"}}
+\item{feature_embedding}{An object of class \code{"histofeature"} as returned
+by \code{\link{load_embeddings}}.}
 
 \item{dr}{A character string specifying the dimensionality reduction method.
 Currently only \code{"pca"} is supported.}
 
-\item{dr_k}{An integer specifying the target reduced dimension}
+\item{dr_k}{An integer specifying the target reduced dimension (number of
+components to retain).}
 
-\item{model}{A character string specifying the classifier type, Currently
-only K-Nearest Neighbors (knn) is supported.}
+\item{model}{A character string specifying the classifier type. Supported
+options are \code{"knn"} for k-nearest neighbors and \code{"logistic"} for
+logistic regression.}
 }
 \value{
-A list of class \code{"histolearn"} with elements:
+An object of class \code{"histolearn"}, which is a list with elements:
 \itemize{
-\item dr_model — the fitted dimensionality reduction model.
-\item model — the fitted classification model.
-\item train_pred — model predictions on the training data.
-\item method — character vector of the reduction and model type.
-\item dr_dim — integer specifying the reduced dimension.
+\item \code{dr_model} — the fitted dimensionality reduction model (e.g., PCA).
+\item \code{model} — the fitted classification model (a
+\code{\link[caret]{train}} object).
+\item \code{train_cm} — the confusion matrix obtained by comparing model
+predictions on the training data to the true labels. Returned as a
+\code{\link[caret]{confusionMatrix}} object.
+\item \code{train_acc} — numeric scalar giving the training accuracy
+(extracted from \code{train_cm$overall["Accuracy"]}).
+\item \code{method} — character vector of length two indicating the
+reduction method and classifier type.
+\item \code{dr_dim} — integer specifying the reduced dimension.
 }
 }
 \description{
 Fits a supervised classification model using reduced-dimensional embeddings.
-Dimensionality reduction (currently PCA) is applied to the input features before
-training the specified classifier (currently K-Nearest Neighbors).
+Dimensionality reduction (currently PCA) is applied to the input features
+before training the specified classifier. Supported classifiers are
+k-nearest neighbors (\code{"knn"}) and multinomial logistic regression
+(\code{"logistic"}) with cross-validation and standardization (centering
+and scaling).
 }
 \note{
 Documentation and code debugging processes were refined with the assistance
@@ -66,4 +83,10 @@ Springer-Verlag New York, 2016.
 Sarkar D (2008). \emph{Lattice: Multivariate Data Visualization with
 R}. Springer, New York. ISBN 978-0-387-75968-5,
 \url{http://lmdvr.r-forge.r-project.org}.
+
+Venables, W. N. & Ripley, B. D. (2002) Modern Applied Statistics with S. Fourth Edition.
+Springer, New York. ISBN 0-387-95457-0
+
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
 }

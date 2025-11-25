@@ -7,24 +7,25 @@
 visualize_embeddings(input_data, dimensions = 2, type = "pca")
 }
 \arguments{
-\item{input_data}{An object of class \code{"histofeature"} created by
-\code{\link{load_embeddings}}.}
+\item{input_data}{An object of class \code{"histofeature"} as returned by
+\code{\link{load_embeddings}}. It must contain a numeric feature matrix
+in \code{input_data$feature} and a non-\code{NULL} label vector/factor in
+\code{input_data$label}.}
 
-\item{dimensions}{A positive integer specifying the number of dimensions
-to visualize (between 2 and 8). Defaults to \code{2}.}
+\item{dimensions}{Integer scalar specifying the number of dimensions to
+visualize. Must be between \code{2} and \code{10}. If the requested number
+of dimensions exceeds the number of available principal components, the
+maximum available is used instead.}
 
-\item{type}{The dimensionality reduction method to use. Currently only
-\code{"pca"} is supported.}
-}
-\value{
-A \code{ggplot} object (for 2D visualization) or a
-\code{ggmatrix} object (for multi-dimensional paired plots), displaying
-the projected embeddings colored by label.
+\item{type}{Character string indicating the dimensionality reduction method.
+Currently only \code{"pca"} is supported.}
 }
 \description{
-Generate a 2D scatterplot or a multi-dimensional paired plot of histological
-feature embeddings using dimensionality reduction. Currently supports
-Principal Component Analysis (PCA) for projection.
+Project histological feature embeddings to a low-dimensional space and
+visualize them as either a 2D scatterplot (when \code{dimensions = 2}) or
+a matrix of pairwise scatterplots (when \code{dimensions > 2}). The function
+currently uses Principal Component Analysis (PCA) for dimensionality
+reduction and colors points by their associated labels.
 }
 \note{
 Documentation and debugging processes were refined with the assistance
@@ -50,4 +51,7 @@ Elberg A, Crowley J (2025). \emph{GGally: Extension to 'ggplot2'}.
 doi:10.32614/CRAN.package.GGally
 \url{https://doi.org/10.32614/CRAN.package.GGally}, R package
 version 2.4.0, \url{https://CRAN.R-project.org/package=GGally}.
+
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
 }

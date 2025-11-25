@@ -7,24 +7,31 @@
 train_knn(X, y)
 }
 \arguments{
-\item{X}{A matrix or data frame of predictor variables.}
+\item{X}{A matrix or data frame of predictor variables (samples in rows,
+features in columns).}
 
-\item{y}{A factor vector of class labels corresponding to the rows of \code{X}.}
+\item{y}{A factor or character vector of class labels corresponding to the
+rows of \code{X}. Coerced internally to a factor.}
 }
 \value{
-A fitted \code{knn3} model using the optimal value of \code{k} determined
-via cross-validation.
+A fitted \code{\link[caret]{train}} object with \code{method = "knn"}, which
+encapsulates the cross-validated k-NN model and tuning results.
 }
 \description{
-Internal helper function that trains and tunes a k-Nearest Neighbors (k-NN)
-classification model using the \pkg{caret} package.
+Internal helper function that trains and tunes a k-nearest neighbors (k-NN)
+classification model using the \pkg{caret} package. The predictors are
+centered and scaled, and \code{k} is selected via cross-validation.
 }
 \note{
 Documentation and code debugging processes were refined with the assistance
 of ChatGPT-5 to improve accuracy and clarity.
 }
 \references{
-Kuhn, M. (2008). Building Predictive Models in R Using the caret
-Package. Journal of Statistical Software, 28(5), 1–26.
+Kuhn, M. (2008). Building Predictive Models in R Using the \pkg{caret}
+Package. \emph{Journal of Statistical Software}, 28(5), 1–26.
 https://doi.org/10.18637/jss.v028.i05
+
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
 }
+\keyword{internal}

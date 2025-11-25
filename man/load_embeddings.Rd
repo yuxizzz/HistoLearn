@@ -4,13 +4,13 @@
 \alias{load_embeddings}
 \title{Load Histological Feature Embeddings}
 \usage{
-load_embeddings(feature, label = NULL)
+load_embeddings(feature, label)
 }
 \arguments{
 \item{feature}{A numeric \code{matrix} or \code{data.frame} of features where
 rows are samples/observations and columns are feature dimensions.}
 
-\item{label}{Optional labels for each sample. May be a vector, factor, or a
+\item{label}{The labels for each sample. May be a vector, factor, or a
 1-column \code{data.frame}/\code{matrix}. If supplied, its length must equal
 \code{nrow(feature)}. Converted internally to a \code{factor}.}
 }
@@ -19,7 +19,7 @@ An object of class \code{"histofeature"} with:
 \itemize{
 \item \code{feature}: a \code{data.frame} of features with columns named
 \code{"1"}, \code{"2"}, \code{"3"}, \ldots
-\item \code{label}: a \code{factor} of labels or \code{NULL}
+\item \code{label}: a \code{factor} of labels
 }
 }
 \description{
@@ -36,4 +36,8 @@ data(train_embeddings)
 data(train_labels)
 train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 
+}
+\references{
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
 }

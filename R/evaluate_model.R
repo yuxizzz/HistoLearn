@@ -1,20 +1,26 @@
 #' Evaluate Model Performance
 #'
-#' Evaluate a trained classification model on a test dataset. The function applies
-#' the model’s dimensionality-reduction transformation to the test features,
-#' generates predictions, computes overall accuracy, and visualizes the confusion
-#' matrix using \pkg{ggplot2}.
+#' Evaluate a trained classification model on a test dataset. The function
+#' applies the trained dimensionality-reduction transformation to the test
+#' features, generates predictions using the fitted classifier, computes overall
+#' accuracy, and visualizes the training and test confusion matrices using
+#' \pkg{ggplot2}.
 #'
-#' @param trained_model A fitted model object returned by \code{\link{train_model}}.
-#'   Must include components \code{dr_model}, \code{model}, and \code{dr_dim}.
+#' @param trained_model A fitted model object returned by
+#'   \code{\link{train_model}}. Must include components \code{dr_model},
+#'   \code{model}, \code{dr_dim}, \code{train_cm}, and \code{train_acc}.
 #' @param test_data An object of class \code{"histofeature"} created by
 #'   \code{\link{load_embeddings}}, containing test features and labels.
 #'
 #' @return
-#' A list containing:
+#' A list with the following elements:
 #' \itemize{
-#'   \item \code{conf_matrix} — a \code{ggplot} object showing the confusion matrix.
-#'   \item \code{metric} — a list with evaluation metrics (currently accuracy).
+#'   \item \code{train_conf_matrix} — a \code{ggplot} object visualizing the
+#'         training confusion matrix.
+#'   \item \code{train_metric} — numeric training accuracy.
+#'   \item \code{test_conf_matrix} — a \code{ggplot} object visualizing the
+#'         test confusion matrix.
+#'   \item \code{test_metric} — numeric test accuracy.
 #' }
 #'
 #' @examples
@@ -37,34 +43,57 @@
 #' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
 #' Springer-Verlag New York, 2016.
 #'
+#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+#' (Large language model). <https://chat.openai.com/>
+#'
 #' @export
 #' @import caret ggplot2
 evaluate_model <- function(trained_model, test_data) {
+  # check inputs
+  if (!inherits(test_data, "histofeature")) {
+    stop("`test_data` must be a 'histofeature' object.", call. = TRUE)
+  }
+  if (!inherits(trained_model, "histolearn")) {
+    stop("`trained_model` must be a 'histolearn' object.", call. = TRUE)
+  }
 
-  X_test_dr <- NULL
-  X_test <- NULL
   X_test <- predict(trained_model$dr_model, test_data$feature)
   k <- trained_model$dr_dim
   X_test_dr <- X_test[, 1:k, drop = FALSE]
   predictions <- predict(trained_model$model,
-                         X_test_dr,
-                         type = "class")
-  cm <- caret::confusionMatrix(predictions, test_data$label)
-  cm_df <- as.data.frame(cm$table)
-  metrics <- list(
-    Accuracy = cm$overall["Accuracy"]
-  )
+                         X_test_dr)
+  cm_test <- caret::confusionMatrix(predictions, test_data$label)
+  cm_test_df <- as.data.frame(cm_test$table)
+  acc_test <- unname(cm_test$overall["Accuracy"])
 
-  p <- ggplot2::ggplot(cm_df, aes(x = Prediction, y = Reference, fill = Freq)) +
+  cm_train <- trained_model$train_cm
+  acc_train <- unname(trained_model$train_acc)
+  cm_train_df <- as.data.frame(cm_train$table)
+
+  p <- ggplot2::ggplot(cm_test_df, aes(x = cm_test_df$Prediction, y = cm_test_df$Reference,
+                                  fill = cm_test_df$Freq)) +
     geom_tile(color = "white") +
-    geom_text(aes(label = Freq), color = "white", size = 5) +
+    geom_text(aes(label = cm_test_df$Freq), color = "white", size = 5) +
     scale_fill_gradient(low = "skyblue", high = "darkblue") +
     labs(
-      title = "Confusion Matrix",
+      title = "Test Confusion Matrix",
       x = "Predicted Label",
       y = "True Label"
     ) +
     theme_minimal()
-  return(list(conf_matrix=p, metric=metrics))
+  p_train <- ggplot2::ggplot(cm_train_df, aes(x = cm_train_df$Prediction,
+                                              y = cm_train_df$Reference,
+                                              fill = cm_train_df$Freq)) +
+    geom_tile(color = "white") +
+    geom_text(aes(label = cm_train_df$Freq), color = "white", size = 5) +
+    scale_fill_gradient(low = "skyblue", high = "darkblue") +
+    labs(
+      title = "Train Confusion Matrix",
+      x = "Predicted Label",
+      y = "True Label"
+    ) +
+    theme_minimal()
+  return(list(train_conf_matrix=p_train, train_metric=acc_train,
+              test_conf_matrix=p, test_metric=acc_test))
 }
 #[END]

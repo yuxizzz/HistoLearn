@@ -7,24 +7,30 @@
 evaluate_model(trained_model, test_data)
 }
 \arguments{
-\item{trained_model}{A fitted model object returned by \code{\link{train_model}}.
-Must include components \code{dr_model}, \code{model}, and \code{dr_dim}.}
+\item{trained_model}{A fitted model object returned by
+\code{\link{train_model}}. Must include components \code{dr_model},
+\code{model}, \code{dr_dim}, \code{train_cm}, and \code{train_acc}.}
 
 \item{test_data}{An object of class \code{"histofeature"} created by
 \code{\link{load_embeddings}}, containing test features and labels.}
 }
 \value{
-A list containing:
+A list with the following elements:
 \itemize{
-\item \code{conf_matrix} — a \code{ggplot} object showing the confusion matrix.
-\item \code{metric} — a list with evaluation metrics (currently accuracy).
+\item \code{train_conf_matrix} — a \code{ggplot} object visualizing the
+training confusion matrix.
+\item \code{train_metric} — numeric training accuracy.
+\item \code{test_conf_matrix} — a \code{ggplot} object visualizing the
+test confusion matrix.
+\item \code{test_metric} — numeric test accuracy.
 }
 }
 \description{
-Evaluate a trained classification model on a test dataset. The function applies
-the model’s dimensionality-reduction transformation to the test features,
-generates predictions, computes overall accuracy, and visualizes the confusion
-matrix using \pkg{ggplot2}.
+Evaluate a trained classification model on a test dataset. The function
+applies the trained dimensionality-reduction transformation to the test
+features, generates predictions using the fitted classifier, computes overall
+accuracy, and visualizes the training and test confusion matrices using
+\pkg{ggplot2}.
 }
 \examples{
 data(train_embeddings)
@@ -45,4 +51,7 @@ https://doi.org/10.18637/jss.v028.i05
 
 H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
 Springer-Verlag New York, 2016.
+
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
 }

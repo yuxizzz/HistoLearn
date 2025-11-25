@@ -16,22 +16,32 @@ test_that("load_embeddings works with valid feature and label (base case)", {
 })
 
 
-test_that("load_embeddings handles NULL label", {
+test_that("load_embeddings requires labels", {
   feature <- matrix(1:4, nrow = 2, ncol = 2)
-  result <- load_embeddings(feature, label = NULL)
-
-  expect_null(result$label)
-  expect_true(is.data.frame(result$feature))
+  expect_error(load_embeddings(feature, label = NULL))
 })
 
-test_that("load_embeddings accepts label as data.frame or matrix", {
-  feature <- matrix(1:6, nrow = 3, ncol = 2)
-  label_df <- data.frame(label = c("X", "Y", "X"))
-  label_mat <- matrix(c("X", "Y", "X"), ncol = 1)
-  res_df <- load_embeddings(feature, label_df)
-  res_mat <- load_embeddings(feature, label_mat)
+test_that("load_embeddings accepts label as data.frame, factor, matrix or vector", {
+  feature   <- matrix(1:6, nrow = 3, ncol = 2)
+  label_vec <- c("X", "Y", "X")
 
-  expect_equal(res_df$label, res_mat$label)
+  label_df  <- data.frame(label = label_vec)
+  label_mat <- matrix(label_vec, ncol = 1)
+  label_fac <- factor(label_vec)
+
+  res_vec <- load_embeddings(feature, label_vec)
+  res_df  <- load_embeddings(feature, label_df)
+  res_mat <- load_embeddings(feature, label_mat)
+  res_fac <- load_embeddings(feature, label_fac)
+
+  # All should produce identical factor labels
+  expect_identical(res_vec$label, res_df$label)
+  expect_identical(res_vec$label, res_mat$label)
+  expect_identical(res_vec$label, res_fac$label)
+
+  # And they should be factors with expected levels
+  expect_true(is.factor(res_vec$label))
+  expect_equal(levels(res_vec$label), c("X", "Y"))
 })
 
 test_that("load_embeddings accepts feature as data.frame or matrix", {
@@ -44,10 +54,15 @@ test_that("load_embeddings accepts feature as data.frame or matrix", {
   expect_equal(res_df$feature, res_mat$feature)
 })
 
+test_that("load_embeddings errors when label has more than one column", {
+  feature   <- matrix(1:6, nrow = 3, ncol = 2)
+  label_mat <- matrix(c("A", "B", "A", "x", "y", "z"), ncol = 2)
+  expect_error(load_embeddings(feature, label_mat))
+})
+
 test_that("load_embeddings fails if feature and label lengths mismatch", {
   feature <- matrix(1:4, nrow = 2)
   label <- c("A", "B", "C")
-
   expect_error(load_embeddings(feature, label))
 })
 

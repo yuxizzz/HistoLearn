@@ -50,9 +50,15 @@ test_that("Integration test: test end-to-end pipeline runs on example data", {
   )
 
   expect_s3_class(model, "histolearn")
-  expect_true(all(c("dr_model", "model", "train_pred", "method", "dr_dim") %in% names(model)))
+  expect_true(all(
+    c("dr_model", "model", "train_cm", "train_acc", "method", "dr_dim")
+    %in% names(model)
+  ))
   expect_true(is.numeric(model$dr_dim))
   expect_gt(model$dr_dim, 0)
+  expect_s3_class(model$train_cm, "confusionMatrix")
+  expect_true(is.numeric(model$train_acc))
+  expect_true(model$train_acc >= 0 && model$train_acc <= 1)
 
   # 4) Evaluate model
   eval_res <- evaluate_model(
@@ -61,19 +67,65 @@ test_that("Integration test: test end-to-end pipeline runs on example data", {
   )
 
   expect_type(eval_res, "list")
-  expect_true(all(c("conf_matrix", "metric") %in% names(eval_res)))
+  expect_true(all(
+    c("train_conf_matrix", "train_metric", "test_conf_matrix", "test_metric")
+    %in% names(eval_res)
+  ))
 
-  # confusion matrix should be a ggplot (or ggmatrix, depending on impl)
-  expect_true(inherits(eval_res$conf_matrix, "ggplot") || inherits(eval_res$conf_matrix, "ggmatrix"))
+  # confusion matrices should be ggplot objects
+  expect_s3_class(eval_res$train_conf_matrix, "ggplot")
+  expect_s3_class(eval_res$test_conf_matrix,  "ggplot")
 
-  # metric should contain (at least) accuracy between 0 and 1
-  metric <- eval_res$metric
-  expect_true(is.list(metric) || is.numeric(metric) || is.data.frame(metric))
+  # metrics should be numeric accuracies in [0, 1]
+  expect_true(is.numeric(eval_res$train_metric))
+  expect_true(length(eval_res$train_metric) == 1)
+  expect_true(eval_res$train_metric >= 0 && eval_res$train_metric <= 1)
 
-  if (is.list(metric) && "accuracy" %in% names(metric)) {
-    acc <- metric$accuracy
-    expect_true(is.numeric(acc))
-    expect_gte(acc, 0)
-    expect_lte(acc, 1)
-  }
+  expect_true(is.numeric(eval_res$test_metric))
+  expect_true(length(eval_res$test_metric) == 1)
+  expect_true(eval_res$test_metric >= 0 && eval_res$test_metric <= 1)
+
+  # 5) Train model (PCA + logistic regression)
+  model_logit <- train_model(
+    feature_embedding = trainset,
+    dr    = "pca",
+    dr_k  = 20,
+    model = "logistic"
+  )
+
+  expect_s3_class(model_logit, "histolearn")
+  expect_true(all(
+    c("dr_model", "model", "train_cm", "train_acc", "method", "dr_dim") %in% names(model_logit)
+  ))
+  expect_true(is.numeric(model_logit$dr_dim))
+  expect_gt(model_logit$dr_dim, 0)
+  expect_s3_class(model_logit$train_cm, "confusionMatrix")
+  expect_true(is.numeric(model_logit$train_acc))
+  expect_true(model_logit$train_acc >= 0 && model_logit$train_acc <= 1)
+  expect_identical(model_logit$method, c("pca", "logistic"))
+  expect_s3_class(model_logit$model, "train")
+  expect_equal(model_logit$model$method, "multinom")
+
+  # 6) Evaluate model (logistic)
+  eval_logit <- evaluate_model(
+    trained_model = model_logit,
+    test_data     = testset
+  )
+
+  expect_type(eval_logit, "list")
+  expect_true(all(
+    c("train_conf_matrix", "train_metric", "test_conf_matrix", "test_metric")
+    %in% names(eval_logit)
+  ))
+
+  expect_s3_class(eval_logit$train_conf_matrix, "ggplot")
+  expect_s3_class(eval_logit$test_conf_matrix,  "ggplot")
+
+  expect_true(is.numeric(eval_logit$train_metric))
+  expect_true(length(eval_logit$train_metric) == 1)
+  expect_true(eval_logit$train_metric >= 0 && eval_logit$train_metric <= 1)
+
+  expect_true(is.numeric(eval_logit$test_metric))
+  expect_true(length(eval_logit$test_metric) == 1)
+  expect_true(eval_logit$test_metric >= 0 && eval_logit$test_metric <= 1)
 })

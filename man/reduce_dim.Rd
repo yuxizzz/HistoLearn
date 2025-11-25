@@ -33,4 +33,7 @@ of ChatGPT-5 to improve accuracy and clarity.
 R Core Team (2025). \emph{R: A Language and Environment for
 Statistical Computing}. R Foundation for Statistical Computing,
 Vienna, Austria. \url{https://www.R-project.org/}.
+
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
 }

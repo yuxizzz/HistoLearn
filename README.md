@@ -80,44 +80,57 @@ documentation and example workflows were written by Yuxi Zhu. The
 example data is derived from Kather et al. (2018) and processed using
 the pathology foundation model UNI from Chen et al. (2024). The author
 conducted data preprocessing to prepare example embeddings and
-structured training/test datasets. The `stats` package is used for PCA
-computation; `caret` is used for k-NN model training and
-cross-validation. `ggplot2` and `GGally` are used for visualization.
+structured training/test datasets.
+
+The `stats` package is used for principal component analysis (PCA). The
+`caret` package is used for k-nearest neighbors (k-NN) model training
+(via `stats`), multinomial logistic regression (via `nnet`), and
+cross-validation, as well as for computing confusion matrices and
+accuracy metrics. The package uses `ggplot2` for visualization and
+`GGally` for multi-dimensional paired plots, while `lattice` is included
+to support underlying graphical components used by caret during
+resampling and model diagnostics.
+
 `ChatGPT-5` from OpenAI was used to polish and format documentation,
 debug code, and look up functions.
 
 ## References:
 
-    Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
-    Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
-    Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber,
-    G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose
-    foundation model for computational pathology. Nature Medicine, 30(3), 850–862.
-    https://doi.org/10.1038/s41591-024-02857-3
+- Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
+  Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
+  Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P.,
+  Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a
+  general-purpose foundation model for computational pathology. *Nature
+  Medicine*, 30(3), 850–862.
+  <https://doi.org/10.1038/s41591-024-02857-3>
 
-    Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. 
-    Journal of Statistical Software, 28(5), 1–26. https://doi.org/10.18637/jss.v028.i05
+- H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+  Springer-Verlag New York, 2016.
 
-    R Core Team (2025). _R: A Language and Environment for
-    Statistical Computing_. R Foundation for Statistical Computing,
-    Vienna, Austria. <https://www.R-project.org/>.
+- Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological
+  images of human colorectal cancer and healthy tissue (v0.1) \[Data
+  set\]. Zenodo. <https://doi.org/10.5281/zenodo.1214456>
 
-    H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
-    Springer-Verlag New York, 2016.
+- Kuhn, M. (2008). Building Predictive Models in R Using the caret
+  Package. Journal of Statistical Software, 28(5), 1–26.
+  <https://doi.org/10.18637/jss.v028.i05>
 
-    Sarkar D (2008). _Lattice: Multivariate Data Visualization with
-    R_. Springer, New York. ISBN 978-0-387-75968-5,
-    <http://lmdvr.r-forge.r-project.org>.
+- R Core Team (2025). R: A Language and Environment for Statistical
+  Computing. R Foundation for Statistical Computing, Vienna, Austria.
+  <https://www.R-project.org/>.
 
-    Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E,
-    Elberg A, Crowley J (2025). _GGally: Extension to 'ggplot2'_.
-    doi:10.32614/CRAN.package.GGally
-    <https://doi.org/10.32614/CRAN.package.GGally>, R package
-    version 2.4.0, <https://CRAN.R-project.org/package=GGally>.
+- Sarkar, D. (2008). Lattice: Multivariate Data Visualization with R.
+  Springer, New York. ISBN 978-0-387-75968-5,
+  <http://lmdvr.r-forge.r-project.org>.
 
-    Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of
-    human colorectal cancer and healthy tissue (v0.1) \[Data set\]. Zenodo.
-    https://doi.org/10.5281/zenodo.1214456
+- Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M.,
+  Thoen, E., Elberg, A., Crowley, J. (2025). GGally: Extension to
+  ‘ggplot2’. <doi:10.32614/CRAN.package.GGally>
+  <https://doi.org/10.32614/CRAN.package.GGally>, R package version
+  2.4.0, <https://CRAN.R-project.org/package=GGally>.
+
+- Venables, W. N., & Ripley, B. D. (2002). Modern Applied Statistics
+  with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0
 
 ## Acknowledgements:
 

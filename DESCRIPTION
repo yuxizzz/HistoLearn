@@ -30,9 +30,9 @@ Imports:
     GGally,
     ggplot2,
     lattice,
+    nnet,
     shiny,
-    stats,
-    utils
+    stats
 Depends: 
     R (>= 3.5)
 Suggests: 
