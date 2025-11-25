@@ -80,7 +80,8 @@ documentation and example workflows were written by Yuxi Zhu. The
 example data is derived from Kather et al. (2018) and processed using
 the pathology foundation model UNI from Chen et al. (2024). The author
 conducted data preprocessing to prepare example embeddings and
-structured training/test datasets.
+structured training/test datasets. ChatGPT-5 is used to generate the
+template for Shiny app and it was fine-tuned by Yuxi Zhu.
 
 The `stats` package is used for principal component analysis (PCA). The
 `caret` package is used for k-nearest neighbors (k-NN) model training
@@ -135,6 +136,6 @@ debug code, and look up functions.
 ## Acknowledgements:
 
 This package was developed as part of an assessment for 2025 BCB410H:
-Applied Bioinformat- ics course at the University of Toronto, Toronto,
+Applied Bioinformatics course at the University of Toronto, Toronto,
 CANADA. HistoLearn welcomes issues, enhancement requests, and other
 contributions. To submit an issue, use the GitHub issues.

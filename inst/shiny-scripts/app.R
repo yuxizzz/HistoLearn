@@ -13,8 +13,9 @@ ui <- fluidPage(
        'histofeature' objects, and generate dimensionality-reduced visualizations using PCA.
        The app also supports supervised learning through the HistoLearn modeling pipeline,
        enabling users to perform dimensionality reduction, train k-nearest neighbor (kNN)
-       classifiers, and evaluate model performance on test data. Model evaluation includes
-       confusion matrices and accuracy metrics. Overall, the HistoLearn Shiny App offers a
+       or multinomial logistic regression classifiers, and evaluate model performance on
+       test data. Model evaluation includes confusion matrices and accuracy metrics.
+       Overall, the HistoLearn Shiny App offers a
        streamlined, user-friendly platform for embedding inspection, exploratory analysis,
        classification training, and performance assessment in computational histopathology."
              ),
@@ -58,7 +59,7 @@ ui <- fluidPage(
       sliderInput(
         "viz_dims",
         "Number of dimensions to visualize (PCA)",
-        min = 2, max = 8, value = 2, step = 1
+        min = 2, max = 10, value = 2, step = 1
       ),
       actionButton("run_viz", "Visualize embeddings"),
 
@@ -77,10 +78,11 @@ ui <- fluidPage(
       selectInput(
         "model_type",
         "Classifier",
-        choices = c("K-Nearest Neighbors" = "knn"),
-        selected = "knn"
-      ),
-      actionButton("run_model", "Train model & evaluate")
+        choices = c(
+          "K-Nearest Neighbors" = "knn",
+          "Multinomial Logistic Regression" = "logistic"
+        ), selected = "knn"),
+        actionButton("run_model", "Train model & evaluate")
     ),
 
     mainPanel(
@@ -100,10 +102,12 @@ ui <- fluidPage(
         ),
         tabPanel(
           "Model performance",
+          h4("Train Set Confusion matrix"),
+          plotOutput("cm_plot_train"),
           h4("Test Set Confusion matrix"),
           plotOutput("cm_plot"),
           tags$hr(),
-          h4("Test Set Metrics"),
+          h4("Model Metrics"),
           verbatimTextOutput("metric_text")
         )
       )
@@ -315,13 +319,24 @@ server <- function(input, output, session) {
     ev <- eval_result_rv()
     if (is.null(ev)) return(NULL)
 
-    cm_plot <- ev$conf_matrix
+    cm_plot <- ev$test_conf_matrix
     if (inherits(cm_plot, "ggplot")) {
       print(cm_plot)
-    } else {
-      plot(cm_plot)
     }
+
   })
+
+  output$cm_plot_train <- renderPlot(
+    {
+      ev <- eval_result_rv()
+      if (is.null(ev)) return(NULL)
+
+      cm_plot_train <- ev$train_conf_matrix
+      if (inherits(cm_plot_train, "ggplot")) {
+        print(cm_plot_train)
+      }
+    }
+  )
 
   output$metric_text <- renderPrint({
     ev <- eval_result_rv()
@@ -329,13 +344,13 @@ server <- function(input, output, session) {
       cat("No evaluation results yet.\n")
       return(invisible(NULL))
     }
+    tm <- trained_model_rv()
 
-    metric <- ev$metric
-    if (is.null(metric)) {
-      cat("No metrics available.\n")
-    } else {
-      print(metric)
-    }
+    cat("Model type:", tm$method[2], "\n")
+    test_acc  <- ev$test_metric
+    train_acc <- ev$train_metric
+    cat(sprintf("Train accuracy: %.3f\n", train_acc))
+    cat(sprintf("Test  accuracy: %.3f\n", test_acc))
   })
 }
 

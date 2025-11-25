@@ -103,6 +103,9 @@ Another classification model to try is logistic regression. This is called linea
 ```{r}
 model <- train_model(trainset, dr = "pca", dr_k = 20, model = "logistic")
 ```
+```{r}
+model$method
+```
 
 we will evaluate the model on the our test set as well.
 
