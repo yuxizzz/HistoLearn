@@ -70,7 +70,7 @@ represent debris.
 
 | Function | Description |
 |----|----|
-| `load_embeddings(feature, label = NULL)` | Load features and labels into a `"histofeature"` object with validation. |
+| `load_embeddings(feature, label)` | Load features and labels into a `"histofeature"` object with validation. |
 | `visualize_embeddings(input_data, dimensions = 2, type = "pca")` | Perform PCA projection and generate 2D or pairwise embedding plots. |
 | `train_model(feature_embedding, dr = "pca", dr_k = 20, model = c("knn", "logistic"))` | Apply PCA reduction and train a k-NN classifier or a logistic regression classifier. Output a `histolearn` object for the final model. |
 | `evaluate_model(trained_model, test_data)` | Evaluate predictions on a test set, visualize train and test confusion matrix, and output train and test accuracy. |

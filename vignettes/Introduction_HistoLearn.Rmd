@@ -134,7 +134,6 @@ evaluate_model(trained_model=model, test_data = testset)
 
 ## References
 
-```         
 - Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M., Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. Nature Medicine, 30(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
 
 - H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
@@ -150,7 +149,6 @@ evaluate_model(trained_model=model, test_data = testset)
 - Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M., Thoen, E., Elberg, A., Crowley, J. (2025). GGally: Extension to ‘ggplot2’. doi:10.32614/CRAN.package.GGally https://doi.org/10.32614/CRAN.package.GGally, R package version 2.4.0, https://CRAN.R-project.org/package=GGally.
 
 - Venables, W. N., & Ripley, B. D. (2002). Modern Applied Statistics with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0
-```
 
 ------------------------------------------------------------------------
 
