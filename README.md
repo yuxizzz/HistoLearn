@@ -60,11 +60,9 @@ Full tutorial is available on vignettes.
 ### Overview diagram
 
 ![Workflow overview](inst/extdata/workflow.png) The workflow diagram is
-drawn using BioRender and the example H&E images are from Kather et
-al. (2018), The workflow diagram is drawn using BioRender and the
-example colorectal cancer H&E images are from Kather et al. (2018),
-where BACK represent class background, ADI represent class Adipose, DEB
-represent debris.
+drawn using BioRender and the example colorectal cancer H&E images are
+from Kather et al. (2018), where BACK represent class background, ADI
+represent class Adipose, DEB represent debris.
 
 ### Main functions
 
