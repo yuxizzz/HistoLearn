@@ -31,7 +31,7 @@ set.seed(1) # for exact reproducibility
 
 ## Introduction
 
-**HistoLearn** is a simple R package for interpreting and visualizing foundation model derived histological features and training supervised machine learning models using these features. The function ***load_embeddings*** takes in the feature matrix or dataframe with each row representing a sample and, optionally, a label dataframe or matrix that specify the labels for each sample and create a **histofeature** object for downstream analysis. Function ***visualize_embeddings*** allows the user to visualize the embeddings of type **histofeature** using PCA. Function ***train_model*** allows the user to first use dimensional reduction method to reduce the dimension and train a supervised machine learning model to conduct classifications. **evaludate_model** is available for evaluating and inferring the model on testing data of same structure. The shiny implementation of *HistoLearn* is available as ***HistoLearn*** (under construction). For more information, see details below. **This document gives a tour of HistoLearn (version 0.1.0) functionalities**. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production.
+**HistoLearn** is a simple R package for interpreting and visualizing foundation model derived histological features and training supervised machine learning models using these features. The function ***load_embeddings*** takes in the feature matrix or dataframe with each row representing a sample and, optionally, a label dataframe or matrix that specify the labels for each sample and create a **histofeature** object for downstream analysis. Function ***visualize_embeddings*** allows the user to visualize the embeddings of type **histofeature** using PCA. Function ***train_model*** allows the user to first use dimensional reduction method to reduce the dimension and train a supervised machine learning model to conduct classifications. **evaludate_model** is available for evaluating and inferring the model on testing data of same structure. The shiny implementation of *HistoLearn* is available as ***runHistoLearn***. For more information, see details below. **This document gives a tour of HistoLearn (version 0.1.0) functionalities**. It was written in R Markdown, using the [knitr](https://cran.r-project.org/package=knitr) package for production.
 
 See `help(package = "HistoLearn")` for further details and references provided by `citation("HistoLearn")`. To download **HistoLearn**, use the following commands:
 
@@ -116,15 +116,21 @@ evaluate_model(trained_model=model, test_data = testset)
 ## References
 
 ```         
-Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., 
-Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
-Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber, 
-G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose
-foundation model for computational pathology. Nature Medicine, 30(3), 850–862.
-https://doi.org/10.1038/s41591-024-02857-3
+Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M., Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. Nature Medicine, 30(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
 
-Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of
-human colorectal cancer and healthy tissue (v0.1) \[Data set\]. Zenodo. https://doi.org/10.5281/zenodo.1214456
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+
+Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of human colorectal cancer and healthy tissue (v0.1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.1214456
+
+Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software, 28(5), 1–26. https://doi.org/10.18637/jss.v028.i05
+
+R Core Team (2025). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/.
+
+Sarkar, D. (2008). Lattice: Multivariate Data Visualization with R. Springer, New York. ISBN 978-0-387-75968-5, http://lmdvr.r-forge.r-project.org.
+
+Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M., Thoen, E., Elberg, A., Crowley, J. (2025). GGally: Extension to ‘ggplot2’. doi:10.32614/CRAN.package.GGally https://doi.org/10.32614/CRAN.package.GGally, R package version 2.4.0, https://CRAN.R-project.org/package=GGally.
+
+Venables, W. N., & Ripley, B. D. (2002). Modern Applied Statistics with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0
 ```
 
 ------------------------------------------------------------------------
