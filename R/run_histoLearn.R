@@ -1,0 +1,57 @@
+#' Launch Shiny App for HistoLearn
+#'
+#' Launches the Shiny application bundled with the **HistoLearn** package.
+#' The app provides an interface for clustering, visualization, and training
+#' downstream k-NN classification models on histology embeddings.
+#'
+#' @return No return value; opens a Shiny application in the user's browser.
+#'
+#' @examples
+#' \dontrun{
+#' run_histoLearn()
+#' }
+#'
+#' @author Yuxi Zhu, \email{yuxi.zhu@mail.utoronto.ca}
+#'
+#' @references
+#' Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
+#' Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams,
+#' M., Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P.,
+#' Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose
+#' foundation model for computational pathology. Nature Medicine, 30(3), 850–862.
+#' https://doi.org/10.1038/s41591-024-02857-3
+#'
+#' H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+#'
+#' Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of
+#' human colorectal cancer and healthy tissue (v0.1) \[Data set\]. Zenodo.
+#' https://doi.org/10.5281/zenodo.1214456
+#'
+#' Kuhn, M. (2008). Building Predictive Models in R Using the caret Package.
+#' Journal of Statistical Software, 28(5), 1–26. https://doi.org/10.18637/jss.v028.i05
+#'
+#' R Core Team (2025). R: A Language and Environment for Statistical Computing.
+#' R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/.
+#'
+#' Sarkar, D. (2008). Lattice: Multivariate Data Visualization with R. Springer,
+#' New York. ISBN 978-0-387-75968-5, http://lmdvr.r-forge.r-project.org.
+#'
+#' Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M., Thoen, E.,
+#' Elberg, A., Crowley, J. (2025). GGally: Extension to ‘ggplot2’.
+#' doi:10.32614/CRAN.package.GGally https://doi.org/10.32614/CRAN.package.GGally,
+#' R package version 2.4.0, https://CRAN.R-project.org/package=GGally.
+#'
+#' Venables, W. N., & Ripley, B. D. (2002). Modern Applied Statistics with S.
+#' Fourth Edition. Springer, New York. ISBN 0-387-95457-0
+#'
+#' ChatGPT (2025). ChatGPT 5.1 (February 2025 Release).
+#' OpenAI, San Francisco, CA. <https://openai.com/>.
+#'
+#' @export
+#' @importFrom shiny runApp
+run_histoLearn <- function() {
+  appDir <- system.file("shiny-scripts",
+                        package = "HistoLearn")
+  shiny::runApp(appDir, display.mode = "normal")
+  return(invisible(NULL))
+}
