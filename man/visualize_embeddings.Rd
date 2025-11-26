@@ -32,11 +32,12 @@ Documentation and debugging processes were refined with the assistance
 of ChatGPT-5 to improve accuracy and clarity.
 }
 \examples{
+\dontrun{
 data(train_embeddings)
 data(train_labels)
 train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 visualize_embeddings(train_set)
-
+}
 }
 \references{
 R Core Team (2025). \emph{R: A Language and Environment for

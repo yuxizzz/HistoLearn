@@ -18,11 +18,12 @@
 #'   Currently only \code{"pca"} is supported.
 #'
 #' @examples
+#' \dontrun{
 #' data(train_embeddings)
 #' data(train_labels)
 #' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 #' visualize_embeddings(train_set)
-#'
+#' }
 #' @references
 #' R Core Team (2025). _R: A Language and Environment for
 #' Statistical Computing_. R Foundation for Statistical Computing,

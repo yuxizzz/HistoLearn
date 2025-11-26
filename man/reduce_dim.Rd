@@ -22,7 +22,7 @@ A list with the following elements:
 }
 }
 \description{
-Performs dimensionality reduction on a numeric feature matrix.
+A helper function that performs dimensionality reduction on a numeric feature matrix.
 Currently, only Principal Component Analysis (PCA) is implemented.
 }
 \note{
@@ -37,3 +37,4 @@ Vienna, Austria. \url{https://www.R-project.org/}.
 OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
 (Large language model). \url{https://chat.openai.com/}
 }
+\keyword{internal}

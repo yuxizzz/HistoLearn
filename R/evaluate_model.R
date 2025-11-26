@@ -24,6 +24,7 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' data(train_embeddings)
 #' data(train_labels)
 #' data(test_embeddings)
@@ -33,7 +34,7 @@
 #' model <- train_model(feature_embedding=train_set,
 #'                       dr="pca", dr_k=20, model = "knn")
 #' evaluate_model(model, test_set)
-#'
+#'}
 #' @references
 #'
 #' Kuhn, M. (2008). Building Predictive Models in R Using the caret

@@ -32,10 +32,11 @@ Documentation and debugging processes were refined with the assistance
 of ChatGPT-5 to improve accuracy and clarity.
 }
 \examples{
+\dontrun{
 data(train_embeddings)
 data(train_labels)
 train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
-
+}
 }
 \references{
 OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)

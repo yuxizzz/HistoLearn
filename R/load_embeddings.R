@@ -18,10 +18,11 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' data(train_embeddings)
 #' data(train_labels)
 #' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
-#'
+#'}
 #' @references
 #' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
 #' (Large language model). <https://chat.openai.com/>

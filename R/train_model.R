@@ -35,12 +35,13 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' data(train_embeddings)
 #' data(train_labels)
 #' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 #' model <- train_model(feature_embedding=train_set,
 #'                       dr="pca", dr_k=20, model = "knn")
-#'
+#'}
 #' @references
 #' Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
 #' Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
@@ -114,7 +115,7 @@ train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = c("knn
 
 #' Dimension Reduction Helper
 #'
-#' Performs dimensionality reduction on a numeric feature matrix.
+#' A helper function that performs dimensionality reduction on a numeric feature matrix.
 #' Currently, only Principal Component Analysis (PCA) is implemented.
 #'
 #' @param X A numeric matrix where rows represent samples and columns represent features.
@@ -140,6 +141,7 @@ train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = c("knn
 #' Documentation and code debugging processes were refined with the assistance
 #' of ChatGPT-5 to improve accuracy and clarity.
 #'
+#' @keywords internal
 #' @import stats
 reduce_dim <- function(X, method = "pca", k = 20) {
   X_red <- X

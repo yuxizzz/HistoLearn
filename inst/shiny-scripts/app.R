@@ -7,18 +7,15 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       tags$p("Description: This Shiny App is part of the HistoLearn R package.
-       It provides an interactive interface for exploring, visualizing, and modeling
-       histological feature embeddings derived from computational pathology foundation models.
-       Users can upload embedding matrices and corresponding sample labels, construct
-       'histofeature' objects, and generate dimensionality-reduced visualizations using PCA.
-       The app also supports supervised learning through the HistoLearn modeling pipeline,
-       enabling users to perform dimensionality reduction, train k-nearest neighbor (kNN)
-       or multinomial logistic regression classifiers, and evaluate model performance on
-       test data. Model evaluation includes confusion matrices and accuracy metrics.
-       Overall, the HistoLearn Shiny App offers a
-       streamlined, user-friendly platform for embedding inspection, exploratory analysis,
-       classification training, and performance assessment in computational histopathology."
-             ),
+   It provides an interactive interface for exploring, visualizing, and modeling
+   histological feature embeddings derived from computational pathology foundation models.
+   Users can upload embedding matrices and corresponding sample labels, generate
+   PCA-based dimensionality-reduced visualizations, and train supervised learning models
+   through the HistoLearn workflow. Supported classifiers include k-nearest neighbors (kNN)
+   and logistic regression. The app also enables model evaluation, including confusion
+   matrices and accuracy metrics for train and test sets. Example data files
+   (subset_embeddings.csv and subset_labels.csv) are available on GitHub at:
+   https://github.com/yuxizzz/HistoLearn/tree/main/inst/extdata."),
       # br() element to introduce extra vertical spacing
       br(),
 
@@ -29,7 +26,7 @@ ui <- fluidPage(
         'Visualize embeddings'. To train a classifier, specify the training
         proportion, reduced dimensionality, and model type, then press 'Train
         model & evaluate'. Navigate through the tabs on the right to view the
-        embedding visualization, confusion matrix, and evaluation metrics."),
+        embedding visualization, confusion matrices, and evaluation metrics."),
 
       # br() element to introduce extra vertical spacing ----
       br(),
@@ -70,6 +67,7 @@ ui <- fluidPage(
 
       tags$hr(),
       h4("3. Model training & evaluation"),
+      tags$p("Note: Train fraction ranges from 0.5 to 0.9 to ensure the model has enough testing and training data."),
       sliderInput(
         "train_frac",
         "Train fraction (1 − test fraction)",
@@ -77,7 +75,7 @@ ui <- fluidPage(
       ),
       numericInput(
         "dr_k",
-        "Reduced dimension (dr_k for PCA)",
+        "Reduced dimension (k for PCA)",
         value = 10, min = 2, max = 256, step = 1
       ),
       selectInput(
@@ -85,7 +83,7 @@ ui <- fluidPage(
         "Classifier",
         choices = c(
           "K-Nearest Neighbors" = "knn",
-          "Multinomial Logistic Regression" = "logistic"
+          "Logistic Regression" = "logistic"
         ), selected = "knn"),
         actionButton("run_model", "Train model & evaluate")
     ),

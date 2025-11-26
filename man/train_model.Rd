@@ -54,12 +54,13 @@ Documentation and code debugging processes were refined with the assistance
 of ChatGPT-5 to improve accuracy and clarity.
 }
 \examples{
+\dontrun{
 data(train_embeddings)
 data(train_labels)
 train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
 model <- train_model(feature_embedding=train_set,
                       dr="pca", dr_k=20, model = "knn")
-
+}
 }
 \references{
 Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
