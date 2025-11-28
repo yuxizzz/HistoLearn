@@ -127,7 +127,9 @@ evaluate_model <- function(trained_model, test_data) {
       y = "True Label"
     ) +
     theme_minimal()
-  return(list(train_conf_matrix=p_train, train_metric=acc_train,
-              test_conf_matrix=p, test_metric=acc_test))
+  return(list(train_conf_matrix = p_train,
+              train_metric = acc_train,
+              test_conf_matrix = p,
+              test_metric = acc_test))
 }
 # [END]
