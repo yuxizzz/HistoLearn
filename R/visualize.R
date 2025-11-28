@@ -74,7 +74,9 @@ visualize_embeddings <- function(input_data,
 
   # Dimensionality reduction (currently supports only PCA)
   if (type == "pca") {
+    # conduct pca
     pca_result <- stats::prcomp(input_data$feature, center = TRUE, scale. = TRUE)
+    # ensure k is valid (not bigger than maximum dim of pca)
     k <- min(k, ncol(pca_result$x))
     reduced_dim <- as.data.frame(pca_result$x[ , seq_len(k), drop = FALSE])
     colnames(reduced_dim) <- paste0("dim", seq_len(k))
