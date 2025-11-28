@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 
+# UI -------------------
 ui <- fluidPage(
   titlePanel("HistoLearn: Histology Embedding Explorer"),
 
@@ -132,7 +133,7 @@ ui <- fluidPage(
   )
 )
 
-# Server: data handling, modeling, and visualization
+# Server: data handling, modeling, and visualization -------------------
 server <- function(input, output, session) {
 
   # Reactives: load raw feature + label data
