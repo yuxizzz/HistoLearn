@@ -38,10 +38,13 @@
 #' \dontrun{
 #' data(train_embeddings)
 #' data(train_labels)
-#' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
-#' model <- train_model(feature_embedding=train_set,
-#'                       dr="pca", dr_k=20, model = "knn")
-#'}
+#' train_set <- load_embeddings(feature = train_embeddings,
+#'                              label   = train_labels)
+#' model <- train_model(feature_embedding = train_set,
+#'                      dr = "pca",
+#'                      dr_k = 20,
+#'                      model = "knn")
+#' }
 #' @references
 #' Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G.,
 #' Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
@@ -78,17 +81,24 @@
 #'
 #' @export
 #' @import caret stats ggplot2 lattice
-train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = c("knn", "logistic")) {
+train_model <- function(feature_embedding,
+                        dr = "pca",
+                        dr_k  = 20,
+                        model = c("knn", "logistic")) {
+  # Validate input type
   if (!inherits(feature_embedding, "histofeature")) {
-    stop("invalid input", call.=TRUE)
+    stop("invalid input", call. = TRUE)
   }
 
+  # Extract feature matrix and labels
   X <- as.matrix(feature_embedding$feature)
   y <- feature_embedding$label
 
+  # Apply dimensionality reduction (currently PCA)
   dr_out <- reduce_dim(X, method = dr, k = dr_k)
   X_dr <- dr_out$X_red
 
+  # Train the requested classifier
   if (model == "knn") {
     fitted_model <- train_knn(X_dr, y)
   } else if (model == "logistic") {
@@ -96,20 +106,26 @@ train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = c("knn
   } else {
     stop("Unsupported model type: ", model)
   }
+
+  # Predict on training data
   preds <- predict(fitted_model, X_dr)
-  # Compute confusion matrix
+
+  # Compute confusion matrix for training performance
   cm <- caret::confusionMatrix(preds, y)
 
-  # Return results
+  # Construct result object containing DR model, classifier, and metrics
   res_model <- list(
     dr_model = dr_out$model,
     model = fitted_model,
-    train_cm = cm,
+    train_cm  = cm,
     train_acc = unname(cm$overall["Accuracy"]),
     method = c(dr, model),
     dr_dim = dr_k
   )
+
+  # Assign S3 class
   class(res_model) <- "histolearn"
+
   return(res_model)
 }
 
@@ -130,12 +146,12 @@ train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = c("knn
 #'   \item \code{X_red} — the matrix of reduced-dimension features.
 #' }
 #' @references
+#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+#' (Large language model). <https://chat.openai.com/>
+#'
 #' R Core Team (2025). _R: A Language and Environment for
 #' Statistical Computing_. R Foundation for Statistical Computing,
 #' Vienna, Austria. <https://www.R-project.org/>.
-#'
-#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
-#' (Large language model). <https://chat.openai.com/>
 #'
 #' @note
 #' Documentation and code debugging processes were refined with the assistance
@@ -144,16 +160,26 @@ train_model <- function(feature_embedding, dr = "pca", dr_k = 20, model = c("knn
 #' @keywords internal
 #' @import stats
 reduce_dim <- function(X, method = "pca", k = 20) {
+
+  # Initialize reduced matrix as original data
   X_red <- X
+
+  # Validate requested dimension k
   if (k > ncol(X_red)) {
-    stop("invalid dimension", call.=TRUE)
+    stop("invalid dimension", call. = TRUE)
   }
+
+  # Perform PCA if selected method is supported
   if (method == "pca") {
+    # Fit PCA model (center + scale for standardization)
     pca <- stats::prcomp(X, center = TRUE, scale. = TRUE)
-    k   <- min(k, ncol(pca$x))
-    X_red <- pca$x[, 1:k, drop = FALSE]
+    # Ensure k does not exceed available components
+    k <- min(k, ncol(pca$x))
+    # Extract reduced feature matrix with k components
+    X_red <- pca$x[ , 1:k, drop = FALSE]
+    # Return DR model and transformed matrix
     return(list(model = pca, X_red = X_red))
-  } else{
+  } else {
     stop("Unsupported dimension reduction method: ", method)
   }
 }
@@ -189,10 +215,15 @@ reduce_dim <- function(X, method = "pca", k = 20) {
 #' @import caret
 train_knn <- function(X, y) {
 
+  # Ensure predictors are in data.frame format
   X <- as.data.frame(X)
+
+  # Ensure columns have valid, non-empty names
   if (is.null(colnames(X)) || any(!nzchar(colnames(X)))) {
     colnames(X) <- paste0("x", seq_len(ncol(X)))
   }
+
+  # Fit k-NN classifier using caret with CV, centering, and scaling
   knn_fit <- caret::train(
     x = X,
     y = as.factor(y),
@@ -203,6 +234,7 @@ train_knn <- function(X, y) {
   )
   return(knn_fit)
 }
+
 
 #' Train a Multinomial Logistic Regression Classifier
 #'
@@ -222,9 +254,13 @@ train_knn <- function(X, y) {
 #' whose \code{finalModel} component is an \code{\link[nnet]{multinom}} object.
 #'
 #' @references
+#'
 #' Kuhn, M. (2008). Building Predictive Models in R Using the \pkg{caret}
 #' Package. \emph{Journal of Statistical Software}, 28(5), 1–26.
 #' https://doi.org/10.18637/jss.v028.i05
+#'
+#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+#' (Large language model). \url{https://chat.openai.com/}
 #'
 #' R Core Team (2025). \emph{R: A Language and Environment for Statistical
 #' Computing}. R Foundation for Statistical Computing, Vienna, Austria.
@@ -233,9 +269,6 @@ train_knn <- function(X, y) {
 #' Venables, W. N. & Ripley, B. D. (2002) Modern Applied Statistics with S.
 #' Fourth Edition. Springer, New York. ISBN 0-387-95457-0
 #'
-#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
-#' (Large language model). \url{https://chat.openai.com/}
-#'
 #' @note
 #' Documentation and code debugging processes were refined with the assistance
 #' of ChatGPT-5 to improve accuracy and clarity.
@@ -243,20 +276,13 @@ train_knn <- function(X, y) {
 #' @keywords internal
 #' @import caret nnet
 train_logistic <- function(X, y) {
-  # Coerce predictors to data.frame for caret::train
+
+  # Ensure predictors are in data.frame format
   X <- as.data.frame(X)
 
   # Ensure columns have valid, non-empty names
   if (is.null(colnames(X)) || any(!nzchar(colnames(X)))) {
     colnames(X) <- paste0("x", seq_len(ncol(X)))
-  }
-
-  # Coerce labels to factor
-  y <- as.factor(y)
-
-  # Sanity check: must match in length
-  if (nrow(X) != length(y)) {
-    stop("Number of rows in `X` must match length of `y`.", call. = TRUE)
   }
 
   # Train multinomial logistic regression classifier via caret (method = "multinom")
@@ -269,4 +295,4 @@ train_logistic <- function(X, y) {
   )
   return(lr_fit)
 }
-#[END]
+# [END]

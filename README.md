@@ -137,48 +137,48 @@ represent class Adipose, DEB represent debris.
 
 ## References
 
-Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song,
-A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
-Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P.,
-Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). *Towards a
-general-purpose foundation model for computational pathology*. **Nature
-Medicine, 30**(3), 850–862. <https://doi.org/10.1038/s41591-024-02857-3>
-
-Kather, J. N., Halama, N., & Marx, A. (2018). *100,000 histological
-images of human colorectal cancer and healthy tissue* (v0.1) \[Data
-set\]. Zenodo. <https://doi.org/10.5281/zenodo.1214456>
-
-Kuhn, M. (2008). Building predictive models in R using the caret
-package. *Journal of Statistical Software, 28*(5), 1–26.
-<https://doi.org/10.18637/jss.v028.i05>
-
-OpenAI. (2025). *ChatGPT (GPT-5.1, February 2025 version)* (Large
-language model). <https://chat.openai.com/>
-
-R Core Team. (2025). *R: A language and environment for statistical
-computing*. R Foundation for Statistical Computing.
-<https://www.R-project.org/>
-
-Sarkar, D. (2008). *Lattice: Multivariate data visualization with R*.
-Springer. <http://lmdvr.r-forge.r-project.org>
-
-Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M.,
-Thoen, E., Elberg, A., & Crowley, J. (2025). *GGally: Extension to
-“ggplot2”* (Version 2.4.0) \[R package\].
-<https://doi.org/10.32614/CRAN.package.GGally>
-
-Venables, W. N., & Ripley, B. D. (2002). *Modern applied statistics with
-S* (4th ed.). Springer.
-
-Wickham, H. (2016). *ggplot2: Elegant graphics for data analysis*.
-Springer.
-
 Azizi, S., Culp, L., Freyberg, J., Mustafa, B., Baur, S., Kornblith, S.,
 Chen, T., MacWilliams, P., Mahdavi, S. S., Wulczyn, E., Babenko, B.,
 Wilson, M., Loh, A., Chen, P.-H. C., Liu, Y., Bavishi, P., McKinney, S.
 M., Winkens, J., Roy, A. G., … Natarajan, V. (2022). Robust and
 Efficient Medical Imaging with Self-Supervision (No. arXiv:2205.09723).
 arXiv. <https://doi.org/10.48550/arXiv.2205.09723>
+
+Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song,
+A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M.,
+Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P.,
+Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a
+general-purpose foundation model for computational pathology. Nature
+Medicine, 30(3), 850–862. <https://doi.org/10.1038/s41591-024-02857-3>
+
+Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological
+images of human colorectal cancer and healthy tissue (v0.1) \[Data
+set\]. Zenodo. <https://doi.org/10.5281/zenodo.1214456>
+
+Kuhn, M. (2008). Building predictive models in R using the caret
+package. Journal of Statistical Software, 28(5), 1–26.
+<https://doi.org/10.18637/jss.v028.i05>
+
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version) (Large language
+model). <https://chat.openai.com/>
+
+R Core Team. (2025). R: A language and environment for statistical
+computing. R Foundation for Statistical Computing.
+<https://www.R-project.org/>
+
+Sarkar, D. (2008). Lattice: Multivariate data visualization with R.
+Springer. <http://lmdvr.r-forge.r-project.org>
+
+Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M.,
+Thoen, E., Elberg, A., & Crowley, J. (2025). GGally: Extension to
+“ggplot2” (Version 2.4.0) \[R package\].
+<https://doi.org/10.32614/CRAN.package.GGally>
+
+Venables, W. N., & Ripley, B. D. (2002). Modern applied statistics with
+S (4th ed.). Springer.
+
+Wickham, H. (2016). ggplot2: Elegant graphics for data analysis.
+Springer.
 
 ## Acknowledgements:
 

@@ -29,20 +29,19 @@
 #' data(train_labels)
 #' data(test_embeddings)
 #' data(test_labels)
-#' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
-#' test_set <- load_embeddings(feature=test_embeddings, label=test_labels)
-#' model <- train_model(feature_embedding=train_set,
-#'                       dr="pca", dr_k=20, model = "knn")
+#' train_set <- load_embeddings(feature = train_embeddings, label = train_labels)
+#' test_set <- load_embeddings(feature = test_embeddings, label = test_labels)
+#' model <- train_model(feature_embedding = train_set,
+#'                       dr = "pca", dr_k = 20, model = "knn")
 #' evaluate_model(model, test_set)
 #'}
 #' @references
+#' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+#' Springer-Verlag New York, 2016.
 #'
 #' Kuhn, M. (2008). Building Predictive Models in R Using the caret
 #' Package. Journal of Statistical Software, 28(5), 1–26.
 #' https://doi.org/10.18637/jss.v028.i05
-#'
-#' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
-#' Springer-Verlag New York, 2016.
 #'
 #' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
 #' (Large language model). <https://chat.openai.com/>
@@ -58,21 +57,37 @@ evaluate_model <- function(trained_model, test_data) {
     stop("`trained_model` must be a 'histolearn' object.", call. = TRUE)
   }
 
+  # Apply the trained dimensionality reduction model to test features
   X_test <- predict(trained_model$dr_model, test_data$feature)
+
+  # Retrieve the reduced dimension used during training
   k <- trained_model$dr_dim
-  X_test_dr <- X_test[, 1:k, drop = FALSE]
-  predictions <- predict(trained_model$model,
-                         X_test_dr)
+
+  # Subset the projected test features to the first k components
+  X_test_dr <- X_test[ , 1:k, drop = FALSE]
+
+  # Generate predictions on the reduced test data
+  predictions <- predict(trained_model$model, X_test_dr)
+
+  # Compute confusion matrix and extract accuracy for test set
   cm_test <- caret::confusionMatrix(predictions, test_data$label)
   cm_test_df <- as.data.frame(cm_test$table)
   acc_test <- unname(cm_test$overall["Accuracy"])
 
+  # Retrieve the stored training confusion matrix and accuracy
   cm_train <- trained_model$train_cm
   acc_train <- unname(trained_model$train_acc)
   cm_train_df <- as.data.frame(cm_train$table)
 
-  p <- ggplot2::ggplot(cm_test_df, aes(x = cm_test_df$Prediction, y = cm_test_df$Reference,
-                                  fill = cm_test_df$Freq)) +
+  # Plot test confusion matrix as a heatmap
+  p <- ggplot2::ggplot(
+    cm_test_df,
+    aes(
+      x = cm_test_df$Prediction,
+      y = cm_test_df$Reference,
+      fill = cm_test_df$Freq
+    )
+  ) +
     geom_tile(color = "white") +
     geom_text(aes(label = cm_test_df$Freq), color = "white", size = 5) +
     scale_fill_gradient(low = "skyblue", high = "darkblue") +
@@ -82,9 +97,16 @@ evaluate_model <- function(trained_model, test_data) {
       y = "True Label"
     ) +
     theme_minimal()
-  p_train <- ggplot2::ggplot(cm_train_df, aes(x = cm_train_df$Prediction,
-                                              y = cm_train_df$Reference,
-                                              fill = cm_train_df$Freq)) +
+
+  # Plot training confusion matrix for comparison
+  p_train <- ggplot2::ggplot(
+    cm_train_df,
+    aes(
+      x = cm_train_df$Prediction,
+      y = cm_train_df$Reference,
+      fill = cm_train_df$Freq
+    )
+  ) +
     geom_tile(color = "white") +
     geom_text(aes(label = cm_train_df$Freq), color = "white", size = 5) +
     scale_fill_gradient(low = "skyblue", high = "darkblue") +
@@ -97,4 +119,4 @@ evaluate_model <- function(trained_model, test_data) {
   return(list(train_conf_matrix=p_train, train_metric=acc_train,
               test_conf_matrix=p, test_metric=acc_test))
 }
-#[END]
+# [END]

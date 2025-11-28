@@ -57,9 +57,12 @@ of ChatGPT-5 to improve accuracy and clarity.
 \dontrun{
 data(train_embeddings)
 data(train_labels)
-train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
-model <- train_model(feature_embedding=train_set,
-                      dr="pca", dr_k=20, model = "knn")
+train_set <- load_embeddings(feature = train_embeddings,
+                             label   = train_labels)
+model <- train_model(feature_embedding = train_set,
+                     dr = "pca",
+                     dr_k = 20,
+                     model = "knn")
 }
 }
 \references{

@@ -35,7 +35,8 @@ of ChatGPT-5 to improve accuracy and clarity.
 \dontrun{
 data(train_embeddings)
 data(train_labels)
-train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
+train_set <- load_embeddings(feature = train_embeddings,
+                             label = train_labels)
 }
 }
 \references{

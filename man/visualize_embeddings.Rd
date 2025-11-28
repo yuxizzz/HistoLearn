@@ -35,17 +35,18 @@ of ChatGPT-5 to improve accuracy and clarity.
 \dontrun{
 data(train_embeddings)
 data(train_labels)
-train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
+train_set <- load_embeddings(feature = train_embeddings,
+                             label   = train_labels)
 visualize_embeddings(train_set)
 }
 }
 \references{
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
+
 R Core Team (2025). \emph{R: A Language and Environment for
 Statistical Computing}. R Foundation for Statistical Computing,
 Vienna, Austria. \url{https://www.R-project.org/}.
-
-H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
-Springer-Verlag New York, 2016.
 
 Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E,
 Elberg A, Crowley J (2025). \emph{GGally: Extension to 'ggplot2'}.
@@ -53,6 +54,6 @@ doi:10.32614/CRAN.package.GGally
 \url{https://doi.org/10.32614/CRAN.package.GGally}, R package
 version 2.4.0, \url{https://CRAN.R-project.org/package=GGally}.
 
-OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
-(Large language model). \url{https://chat.openai.com/}
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+Springer-Verlag New York, 2016.
 }

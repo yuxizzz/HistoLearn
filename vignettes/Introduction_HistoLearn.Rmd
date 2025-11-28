@@ -31,12 +31,9 @@ set.seed(1) # for exact reproducibility
 
 ## Introduction
 
-**HistoLearn** is a simple R package for interpreting and visualizing foundation model derived histological features and training supervised machine learning models using these features. 
+**HistoLearn** is a simple R package for interpreting and visualizing foundation model derived histological features and training supervised machine learning models using these features.
 
-The function **`load_embeddings()`** accepts a feature matrix or data frame (where each row represents a sample) and, a label matrix or vector. It returns a validated **`histofeature`** object for downstream analysis. The function **`visualize_embeddings()`** enables users to visualize embeddings 
-of class `histofeature` using PCA. The function **`train_model()`** performs dimensionality reduction and then trains a supervised machine learning classifier (k-NN or logistic regression) 
-for downstream prediction tasks. The function **`evaluate_model()`** evaluates the trained model on a test set of the same structure and outputs confusion matrices and accuracy metrics for 
-both training and test datasets. A Shiny implementation of HistoLearn is available via **`run_histoLearn()`**, providing an interactive interface for exploring embeddings and training models. For more information, see the sections below. **This document provides an overview of HistoLearn (version 0.1.0)** and was written in R Markdown using the [knitr](https://cran.r-project.org/package=knitr) package.
+The function **`load_embeddings()`** accepts a feature matrix or data frame (where each row represents a sample) and, a label matrix or vector. It returns a validated **`histofeature`** object for downstream analysis. The function **`visualize_embeddings()`** enables users to visualize embeddings of class `histofeature` using PCA. The function **`train_model()`** performs dimensionality reduction and then trains a supervised machine learning classifier (k-NN or logistic regression) for downstream prediction tasks. The function **`evaluate_model()`** evaluates the trained model on a test set of the same structure and outputs confusion matrices and accuracy metrics for both training and test datasets. A Shiny implementation of HistoLearn is available via **`run_histoLearn()`**, providing an interactive interface for exploring embeddings and training models. For more information, see the sections below. **This document provides an overview of HistoLearn (version 0.1.0)** and was written in R Markdown using the [knitr](https://cran.r-project.org/package=knitr) package.
 
 See `help(package = "HistoLearn")` for further details and references provided by `citation("HistoLearn")`. To download **HistoLearn**, use the following commands:
 
@@ -53,24 +50,18 @@ ls("package:HistoLearn")
 ```
 
 To list all sample datasets available in the package:
+
 ``` r
 data(package = "HistoLearn")
 ```
-
 
 <br>
 
 ## Example Usage
 
-We demonstrate **HistoLearn** using example datasets included in the package. 
-`train_embeddings` and `test_embeddings` contain randomly selected colorectal cancer 
-tissue patches from Kather et al. (2018), transformed into 1024-dimensional embeddings 
-using the pathology foundation model of Chen et al. (2024). Rows represent samples and 
-columns represent embedding features.
+We demonstrate **HistoLearn** using example datasets included in the package. `train_embeddings` and `test_embeddings` contain randomly selected colorectal cancer tissue patches from Kather et al. (2018), transformed into 1024-dimensional embeddings using the pathology foundation model of Chen et al. (2024). Rows represent samples and columns represent embedding features.
 
-`train_labels` and `test_labels` provide the corresponding tissue classes: Adipose (ADI), 
-background (BACK), debris (DEB), lymphocytes (LYM), mucus (MUC), smooth muscle (MUS), 
-normal mucosa (NORM), stroma (STR), and tumor epithelium (TUM).
+`train_labels` and `test_labels` provide the corresponding tissue classes: Adipose (ADI), background (BACK), debris (DEB), lymphocytes (LYM), mucus (MUC), smooth muscle (MUS), normal mucosa (NORM), stroma (STR), and tumor epithelium (TUM).
 
 ### 1. Load the data
 
@@ -87,20 +78,18 @@ testset <- HistoLearn::load_embeddings(feature=HistoLearn::test_embeddings, labe
 
 ### 2. Visualize Data
 
-We first visualize the PCA embeddings of the histological features. Ideally, samples 
-with the same label should cluster together in the reduced space.
+We first visualize the PCA embeddings of the histological features. Ideally, samples with the same label should cluster together in the reduced space.
 
 Visualize the first two PCA components:
 
 ```{r, fig.width = 8}
-visualize_embeddings(input_data=trainset, dimensions = 2, type='pca')
+HistoLearn::visualize_embeddings(input_data=trainset, dimensions = 2, type='pca')
 ```
 
-Visualize the first four PCA components using a pairwise plot to assess whether
-higher-order components also show class separation:
+Visualize the first four PCA components using a pairwise plot to assess whether higher-order components also show class separation:
 
 ```{r, fig.width = 8}
-visualize_embeddings(input_data=trainset, dimensions = 4, type='pca')
+HistoLearn::visualize_embeddings(input_data=trainset, dimensions = 4, type='pca')
 ```
 
 ### 3. Train and Evaluate the Classification Models
@@ -110,45 +99,48 @@ From the PCA visualizations in Step 2, we observe clear class separation, sugges
 Here, we train a model using 20 PCA components:
 
 ```{r}
-model <- train_model(trainset, dr = "pca", dr_k = 20, model = "knn")
+model <- HistoLearn::train_model(trainset, dr = "pca", dr_k = 20, model = "knn")
 ```
 
 Next, we evaluate the model on the test set. evaluate_model() applies the fitted PCA transform to the test embeddings, generates predictions, computes accuracy for both training and test sets, and produces confusion-matrix plots. Ideally, train and test accuracy should be similar to avoid overfitting. In this example, there is roughly a 10% gap between training and test accuracy for the k-NN classifier.
 
 ```{r}
-evaluate_model(trained_model=model, test_data = testset)
+HistoLearn::evaluate_model(trained_model=model, test_data = testset)
 ```
 
 Next, we try logistic regression to see if it yields better performance. Logistic regression is commonly used as a linear probe, as described in Chen et al. (2024).
+
 ```{r}
-model <- train_model(trainset, dr = "pca", dr_k = 20, model = "logistic")
+model <- HistoLearn::train_model(trainset, dr = "pca", dr_k = 20, model = "logistic")
 ```
 
 We then evaluate the model on the test set. In this case, the gap between training and test accuracy is smaller, and the test accuracy is strong (roughly 93%), indicating that logistic regression performs well for this dataset.
 
 ```{r}
-evaluate_model(trained_model=model, test_data = testset)
+HistoLearn::evaluate_model(trained_model=model, test_data = testset)
 ```
+
 ## Package References
-- Zhu, Y. (2025) HistoLearn: A R Package Interpreting and Visualizing Foundation Model Derived Histological Features.  Unpublished. URL https://github.com/yuxizzz/HistoLearn.
+
+-   Zhu, Y. (2025) HistoLearn: A R Package Interpreting and Visualizing Foundation Model Derived Histological Features. Unpublished. URL <https://github.com/yuxizzz/HistoLearn>.
 
 ## References
 
-- Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M., Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. Nature Medicine, 30(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
+-   Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., Chen, B., Zhang, A., Shao, D., Shaban, M., Williams, M., Oldenburg, L., Weishaupt, L. L., Wang, J. J., Vaidya, A., Le, L. P., Gerber, G., Sahai, S., Williams, W., & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. Nature Medicine, 30(3), 850–862. <https://doi.org/10.1038/s41591-024-02857-3>
 
-- H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+-   H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
 
-- Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of human colorectal cancer and healthy tissue (v0.1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.1214456
+-   Kather, J. N., Halama, N., & Marx, A. (2018). 100,000 histological images of human colorectal cancer and healthy tissue (v0.1) [Data set]. Zenodo. <https://doi.org/10.5281/zenodo.1214456>
 
-- Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software, 28(5), 1–26. https://doi.org/10.18637/jss.v028.i05
+-   Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software, 28(5), 1–26. <https://doi.org/10.18637/jss.v028.i05>
 
-- R Core Team (2025). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/.
+-   R Core Team (2025). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. <https://www.R-project.org/>.
 
-- Sarkar, D. (2008). Lattice: Multivariate Data Visualization with R. Springer, New York. ISBN 978-0-387-75968-5, http://lmdvr.r-forge.r-project.org.
+-   Sarkar, D. (2008). Lattice: Multivariate Data Visualization with R. Springer, New York. ISBN 978-0-387-75968-5, <http://lmdvr.r-forge.r-project.org>.
 
-- Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M., Thoen, E., Elberg, A., Crowley, J. (2025). GGally: Extension to ‘ggplot2’. doi:10.32614/CRAN.package.GGally https://doi.org/10.32614/CRAN.package.GGally, R package version 2.4.0, https://CRAN.R-project.org/package=GGally.
+-   Schloerke, B., Cook, D., Larmarange, J., Briatte, F., Marbach, M., Thoen, E., Elberg, A., Crowley, J. (2025). GGally: Extension to ‘ggplot2’. <doi:10.32614/CRAN.package.GGally> <https://doi.org/10.32614/CRAN.package.GGally>, R package version 2.4.0, <https://CRAN.R-project.org/package=GGally>.
 
-- Venables, W. N., & Ripley, B. D. (2002). Modern Applied Statistics with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0
+-   Venables, W. N., & Ripley, B. D. (2002). Modern Applied Statistics with S. Fourth Edition. Springer, New York. ISBN 0-387-95457-0
 
 ------------------------------------------------------------------------
 

@@ -1,3 +1,4 @@
+# Simulate simple two-class data
 set.seed(2)
 X <- matrix(rnorm(200), nrow = 40, ncol = 10)
 y <- factor(sample(c("A", "B"), size = 40, replace = TRUE))
@@ -26,5 +27,4 @@ test_that("visualize_embeddings errors on unsupported type", {
   expect_error(visualize_embeddings(hf, dimensions = 2, type = "umap"))
 })
 
-
-
+# [END]

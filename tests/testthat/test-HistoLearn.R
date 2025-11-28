@@ -95,7 +95,8 @@ test_that("Integration test: test end-to-end pipeline runs on example data", {
 
   expect_s3_class(model_logit, "histolearn")
   expect_true(all(
-    c("dr_model", "model", "train_cm", "train_acc", "method", "dr_dim") %in% names(model_logit)
+    c("dr_model", "model", "train_cm", "train_acc", "method", "dr_dim") %in%
+      names(model_logit)
   ))
   expect_true(is.numeric(model_logit$dr_dim))
   expect_gt(model_logit$dr_dim, 0)
@@ -129,3 +130,4 @@ test_that("Integration test: test end-to-end pipeline runs on example data", {
   expect_true(length(eval_logit$test_metric) == 1)
   expect_true(eval_logit$test_metric >= 0 && eval_logit$test_metric <= 1)
 })
+# [END]

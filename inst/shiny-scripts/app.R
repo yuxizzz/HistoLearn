@@ -6,37 +6,40 @@ ui <- fluidPage(
 
   sidebarLayout(
     sidebarPanel(
+      # App description and usage context
       tags$p("Description: This Shiny App is part of the HistoLearn R package.
-   It provides an interactive interface for exploring, visualizing, and modeling
-   histological feature embeddings derived from computational pathology foundation models.
-   Users can upload embedding matrices and corresponding sample labels, generate
-   PCA-based dimensionality-reduced visualizations, and train supervised learning models
-   through the HistoLearn workflow. Supported classifiers include k-nearest neighbors (kNN)
-   and logistic regression. The app also enables model evaluation, including confusion
-   matrices and accuracy metrics for train and test sets. Example data files
-   (subset_embeddings.csv and subset_labels.csv) are available on GitHub at:
-   https://github.com/yuxizzz/HistoLearn/tree/main/inst/extdata."),
-      # br() element to introduce extra vertical spacing
+      It provides an interactive interface for exploring, visualizing, and
+      modeling histological feature embeddings derived from computational
+      pathology foundation models. Users can upload embedding matrices and
+      corresponding sample labels, generate PCA-based dimensionality-reduced
+      visualizations, and train supervised learning models through the
+      HistoLearn workflow. Supported classifiers include k-nearest neighbors
+      (kNN) and logistic regression. The app also enables model evaluation,
+      including confusion matrices and accuracy metrics for train and test sets.
+      Example data files (subset_embeddings.csv and subset_labels.csv) are
+      available on GitHub at: https://github.com/yuxizzz/HistoLearn/tree/main/inst/extdata."),
       br(),
 
-      # input
+      # Instructions for workflow
       tags$b("Instructions: Begin by uploading a feature embedding matrix
       (rows = samples, columns = features) and the corresponding label file.
-      After loading the data, you may visualize the embeddings using PCA by selecting the number of dimensions and clicking
-        'Visualize embeddings'. To train a classifier, specify the training
-        proportion, reduced dimensionality, and model type, then press 'Train
-        model & evaluate'. Navigate through the tabs on the right to view the
-        embedding visualization, confusion matrices, and evaluation metrics."),
+      After loading the data, you may visualize the embeddings using PCA by
+      selecting the number of dimensions and clicking 'Visualize embeddings'.
+      To train a classifier, specify the training proportion, reduced
+      dimensionality, and model type, then press 'Train model & evaluate'.
+      Navigate through the tabs on the right to view the embedding
+             visualization, confusion matrices, and evaluation metrics."),
 
-      # br() element to introduce extra vertical spacing ----
       br(),
       h4("1. Upload data"),
 
       tags$p("Please upload a file (csv or tsv) containing your feature embeddings
       and another file containing your labels for the feature embeddings.
              Note: In the feature embeddings file, the row should correspond to
-             a sample and each column to a feature. The label_file should only contain 1 column."),
+             a sample and each column to a feature. The label_file should only
+             contain 1 column."),
 
+      # File inputs for features and labels
       fileInput(
         "feature_file",
         "Upload feature embeddings",
@@ -49,6 +52,7 @@ ui <- fluidPage(
         accept = c(".csv", "text/csv", "text/comma-separated-values")
       ),
 
+      # CSV parsing options
       checkboxInput("header", "Files have header", TRUE),
       radioButtons(
         "sep", "Separator",
@@ -58,6 +62,8 @@ ui <- fluidPage(
 
       tags$hr(),
       h4("2. Visualization options"),
+
+      # PCA visualization settings
       sliderInput(
         "viz_dims",
         "Number of dimensions to visualize (PCA)",
@@ -67,12 +73,16 @@ ui <- fluidPage(
 
       tags$hr(),
       h4("3. Model training & evaluation"),
-      tags$p("Note: Train fraction ranges from 0.5 to 0.9 to ensure the model has enough testing and training data."),
+      tags$p("Note: Train fraction ranges from 0.5 to 0.9 to ensure the model
+             has enough testing and training data."),
+
+      # Training fraction slider
       sliderInput(
         "train_frac",
         "Train fraction (1 − test fraction)",
         min = 0.5, max = 0.9, value = 0.7, step = 0.05
       ),
+      # Reduced dimension and classifier selection
       numericInput(
         "dr_k",
         "Reduced dimension (k for PCA)",
@@ -90,6 +100,7 @@ ui <- fluidPage(
 
     mainPanel(
       tabsetPanel(
+        # Tab: data preview
         tabPanel(
           "Data preview",
           h4("Head of feature embeddings"),
@@ -98,11 +109,13 @@ ui <- fluidPage(
           h4("Head of labels"),
           tableOutput("label_head")
         ),
+        # Tab: embedding visualization
         tabPanel(
           "Embedding visualization",
           h4("Dimensionality-reduced embeddings"),
           plotOutput("viz_plot")
         ),
+        # Tab: model performance (confusion matrices & metrics)
         tabPanel(
           "Model performance",
           h4("Train Set Confusion matrix"),
@@ -118,13 +131,15 @@ ui <- fluidPage(
   )
 )
 
+# Server: data handling, modeling, and visualization
 server <- function(input, output, session) {
 
-  # Reactives: load raw feature + label data ----
+  # Reactives: load raw feature + label data
 
   feature_df <- reactive({
     req(input$feature_file)
 
+    # Attempt to read feature file; report any errors via notification
     df <- tryCatch(
       {
         read.csv(
@@ -146,9 +161,11 @@ server <- function(input, output, session) {
     df
   })
 
+  # Reactives: load label data
   label_vec <- reactive({
     req(input$label_file)
 
+    # Attempt to read label file; report any errors via notification
     lab_df <- tryCatch(
       {
         read.csv(
@@ -168,7 +185,7 @@ server <- function(input, output, session) {
     )
 
     if (is.null(lab_df)) return(NULL)
-
+    # Ensure label file has exactly one column
     if (ncol(lab_df) != 1L) {
       showNotification(
         "Label file must have exactly one column.",
@@ -180,8 +197,7 @@ server <- function(input, output, session) {
     as.vector(lab_df[[1]])
   })
 
-  # Preview outputs
-
+  # Preview outputs: show head of features and label
   output$feature_head <- renderTable({
     df <- feature_df()
     if (is.null(df)) return(NULL)
@@ -195,12 +211,12 @@ server <- function(input, output, session) {
   })
 
   # Construct histofeature object
-
   histofeature_obj <- reactive({
     feat <- feature_df()
     lab  <- label_vec()
     req(feat, lab)
 
+    # Check that number of labels matches number of samples
     if (nrow(feat) != length(lab)) {
       showNotification(
         paste0(
@@ -212,6 +228,7 @@ server <- function(input, output, session) {
       return(NULL)
     }
 
+    # Use HistoLearn helper to create histofeature object
     hf <- HistoLearn::load_embeddings(
       feature = feat,
       label   = lab
@@ -229,11 +246,14 @@ server <- function(input, output, session) {
     req(hf)
 
     dims <- input$viz_dims
-    if (dims < 2 || dims > 8) {
-      showNotification("Dimensions must be between 2 and 8.", type = "error")
+
+    # Sanity check on number of dimensions
+    if (dims < 2 || dims > 10) {
+      showNotification("Dimensions must be between 2 and 10.", type = "error")
       return(NULL)
     }
 
+    # Generate PCA-based embedding visualization via HistoLearn
     vis <- HistoLearn::visualize_embeddings(
       input_data = hf,
       dimensions = dims,
@@ -249,8 +269,7 @@ server <- function(input, output, session) {
     print(vis)
   })
 
-  # ---- Model training & evaluation ----
-
+  # Model training & evaluation
   trained_model_rv <- reactiveVal(NULL)
   eval_result_rv   <- reactiveVal(NULL)
 
@@ -261,6 +280,7 @@ server <- function(input, output, session) {
     feature <- hf$feature
     label   <- hf$label
 
+    # Ensure both feature matrix and labels are available
     if (is.null(feature) || is.null(label)) {
       showNotification(
         "Both features and labels are required to train a model.",
@@ -270,6 +290,7 @@ server <- function(input, output, session) {
     }
 
     n <- nrow(feature)
+    # Require minimum sample size for meaningful train/test split
     if (n < 5) {
       showNotification(
         "Need at least 5 samples to train and test.",
@@ -278,6 +299,7 @@ server <- function(input, output, session) {
       return(NULL)
     }
 
+    # Train/test split based on user-specified fraction
     train_frac <- input$train_frac
     set.seed(123)
     train_idx <- sample(seq_len(n), size = floor(train_frac * n))
@@ -309,7 +331,7 @@ server <- function(input, output, session) {
 
     trained_model_rv(tm)
 
-    # Evaluate mode
+    # Evaluate model
     ev <- HistoLearn::evaluate_model(
       trained_model = tm,
       test_data     = hf_test
@@ -318,6 +340,7 @@ server <- function(input, output, session) {
     eval_result_rv(ev)
   })
 
+  # Render test confusion matrix plot
   output$cm_plot <- renderPlot({
     ev <- eval_result_rv()
     if (is.null(ev)) return(NULL)
@@ -329,6 +352,7 @@ server <- function(input, output, session) {
 
   })
 
+  # Render train confusion matrix plot
   output$cm_plot_train <- renderPlot(
     {
       ev <- eval_result_rv()
@@ -341,6 +365,7 @@ server <- function(input, output, session) {
     }
   )
 
+  # Render model performance metrics (accuracy)
   output$metric_text <- renderPrint({
     ev <- eval_result_rv()
     if (is.null(ev)) {
@@ -357,4 +382,6 @@ server <- function(input, output, session) {
   })
 }
 
+# Launch the Shiny application
 shinyApp(ui = ui, server = server)
+# [END]

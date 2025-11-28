@@ -38,20 +38,20 @@ data(train_embeddings)
 data(train_labels)
 data(test_embeddings)
 data(test_labels)
-train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
-test_set <- load_embeddings(feature=test_embeddings, label=test_labels)
-model <- train_model(feature_embedding=train_set,
-                      dr="pca", dr_k=20, model = "knn")
+train_set <- load_embeddings(feature = train_embeddings, label = train_labels)
+test_set <- load_embeddings(feature = test_embeddings, label = test_labels)
+model <- train_model(feature_embedding = train_set,
+                      dr = "pca", dr_k = 20, model = "knn")
 evaluate_model(model, test_set)
 }
 }
 \references{
+H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+Springer-Verlag New York, 2016.
+
 Kuhn, M. (2008). Building Predictive Models in R Using the caret
 Package. Journal of Statistical Software, 28(5), 1–26.
 https://doi.org/10.18637/jss.v028.i05
-
-H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
-Springer-Verlag New York, 2016.
 
 OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
 (Large language model). \url{https://chat.openai.com/}

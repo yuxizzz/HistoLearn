@@ -21,16 +21,17 @@
 #' \dontrun{
 #' data(train_embeddings)
 #' data(train_labels)
-#' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
+#' train_set <- load_embeddings(feature = train_embeddings,
+#'                              label   = train_labels)
 #' visualize_embeddings(train_set)
 #' }
 #' @references
+#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+#' (Large language model). <https://chat.openai.com/>
+#'
 #' R Core Team (2025). _R: A Language and Environment for
 #' Statistical Computing_. R Foundation for Statistical Computing,
 #' Vienna, Austria. <https://www.R-project.org/>.
-#'
-#' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
-#' Springer-Verlag New York, 2016.
 #'
 #' Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E,
 #' Elberg A, Crowley J (2025). _GGally: Extension to 'ggplot2'_.
@@ -38,8 +39,8 @@
 #' <https://doi.org/10.32614/CRAN.package.GGally>, R package
 #' version 2.4.0, <https://CRAN.R-project.org/package=GGally>.
 #'
-#' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
-#' (Large language model). <https://chat.openai.com/>
+#' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
+#' Springer-Verlag New York, 2016.
 #'
 #' @note
 #' Documentation and debugging processes were refined with the assistance
@@ -48,8 +49,9 @@
 #' @export
 #' @import stats ggplot2 GGally
 visualize_embeddings <- function(input_data,
-                                  dimensions=2,
-                                  type='pca') {
+                                 dimensions = 2,
+                                 type       = "pca") {
+
   # Validate input_data object
   if (!inherits(input_data, "histofeature")) {
     stop("invalid input", call. = FALSE)
@@ -58,35 +60,48 @@ visualize_embeddings <- function(input_data,
   k <- as.integer(dimensions)
   # input checking
   if (k > 10 || k < 2) {
-    stop("Not informative or invalid. Choose dimension within 2 to 10", call.=TRUE)
+    stop("Not informative or invalid. Choose dimension within 2 to 10",
+         call. = TRUE)
   }
 
   # Dimensionality reduction (currently supports only PCA)
-  if (type=='pca') {
+  if (type == "pca") {
     pca_result <- stats::prcomp(input_data$feature, center = TRUE, scale. = TRUE)
     k <- min(k, ncol(pca_result$x))
-    reduced_dim <- as.data.frame(pca_result$x[, seq_len(k), drop = FALSE])
+    reduced_dim <- as.data.frame(pca_result$x[ , seq_len(k), drop = FALSE])
     colnames(reduced_dim) <- paste0("dim", seq_len(k))
     reduced_dim$label <- input_data$label
   } else {
-    stop("not supported", call.= FALSE)
+    stop("Other methods not supported", call. = FALSE)
   }
   # Visualization: ore than 2 dimensions -> produce GGally pairwise scatterplot matrix
   if (k > 2) {
     p <- GGally::ggpairs(
       reduced_dim,
       columns = seq_len(k),
-      aes(color = reduced_dim$label)) +
+      mapping = ggplot2::aes(color = reduced_dim$label),
+      lower   = list(continuous = GGally::wrap("points", alpha = 0.7, size = 1.5)),
+      upper   = list(continuous = GGally::wrap("points", alpha = 0.7, size = 1.5)),
+      diag    = list(continuous = GGally::wrap("densityDiag")),
+      legend  = 1
+    ) +
       ggplot2::theme_minimal() +
-      ggplot2::ggtitle(paste("Paired", type, " projection with dimension of", k))
+      ggplot2::ggtitle(
+        paste("Paired", type, "projection with dimension of", k)
+      )
+
   } else {
     # Exactly 2 dimensions -> produce 2D scatterplot
-    p <- ggplot2::ggplot(reduced_dim, aes(reduced_dim$dim1, reduced_dim$dim2,
-                                          color = reduced_dim$label)) +
+    p <- ggplot2::ggplot(
+      reduced_dim,
+      aes(reduced_dim$dim1, reduced_dim$dim2, color = reduced_dim$label)
+    ) +
       ggplot2::geom_point(size = 2, alpha = 0.8) +
       ggplot2::theme_minimal() +
-      ggplot2::ggtitle(paste(type, " projection with dimension of", k))
+      ggplot2::ggtitle(
+        paste(type, " projection with dimension of", k)
+      )
   }
   return(p)
 }
-#[END]
+# [END]

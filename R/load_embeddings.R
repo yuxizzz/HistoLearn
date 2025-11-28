@@ -21,7 +21,8 @@
 #' \dontrun{
 #' data(train_embeddings)
 #' data(train_labels)
-#' train_set <- load_embeddings(feature=train_embeddings, label=train_labels)
+#' train_set <- load_embeddings(feature = train_embeddings,
+#'                              label = train_labels)
 #'}
 #' @references
 #' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
@@ -65,7 +66,7 @@ load_embeddings <- function(feature, label) {
     if (ncol(label) != 1L) {
       stop("If 'label' is a matrix, it must have exactly one column.", call. = TRUE)
     }
-    label <- label[, 1]
+    label <- label[ , 1]
   } else if (!(is.vector(label) || is.factor(label))) {
     # Anything else is not supported
     stop("'label' must be a vector, factor, 1-column matrix, or 1-column data.frame.",
@@ -86,10 +87,10 @@ load_embeddings <- function(feature, label) {
   # construct histofeature object
   feature_embedding <- list(
     feature = result,
-    label   = labels_fac
+    label = labels_fac
   )
   class(feature_embedding) <- "histofeature"
 
   return(feature_embedding)
 }
-#[END]
+# [END]

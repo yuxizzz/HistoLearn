@@ -74,3 +74,4 @@ test_that("load_embeddings fails if feature matrix is in valid", {
   feature[1, 2] <- Inf
   expect_error(load_embeddings(feature, label = labels))
 })
+# [END]

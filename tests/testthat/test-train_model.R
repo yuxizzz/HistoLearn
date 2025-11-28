@@ -1,7 +1,9 @@
+# Simulate simple two-class data
 set.seed(4)
 X <- matrix(rnorm(300), nrow = 60, ncol = 5)
 y <- factor(sample(c("A", "B"), size = 60, replace = TRUE))
 hf <- load_embeddings(X, y)
+
 test_that("train_model runs dimension reduction and knn
           and returns histolearn object", {
   res <- train_model(
@@ -102,7 +104,7 @@ test_that("train_logistic trains a valid logistic regression model.", {
   X_df <- as.data.frame(X_log)
   colnames(X_df) <- paste0("x", seq_len(ncol(X_df)))
   model <- train_logistic(X_df, y_log)
-  # caret::train object with method = "glm"
+  # caret::train object with method = "multinom"
   expect_s3_class(model, "train")
   expect_equal(model$method, "multinom")
   # Predictions on training data
@@ -110,3 +112,4 @@ test_that("train_logistic trains a valid logistic regression model.", {
   expect_true(is.factor(preds))
   expect_length(preds, nrow(X_df))
 })
+# [END]

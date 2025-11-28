@@ -33,14 +33,14 @@ Kuhn, M. (2008). Building Predictive Models in R Using the \pkg{caret}
 Package. \emph{Journal of Statistical Software}, 28(5), 1–26.
 https://doi.org/10.18637/jss.v028.i05
 
+OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
+(Large language model). \url{https://chat.openai.com/}
+
 R Core Team (2025). \emph{R: A Language and Environment for Statistical
 Computing}. R Foundation for Statistical Computing, Vienna, Austria.
 https://www.R-project.org/
 
 Venables, W. N. & Ripley, B. D. (2002) Modern Applied Statistics with S.
 Fourth Edition. Springer, New York. ISBN 0-387-95457-0
-
-OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
-(Large language model). \url{https://chat.openai.com/}
 }
 \keyword{internal}
