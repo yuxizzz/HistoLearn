@@ -2,7 +2,7 @@
 #'
 #' Launches the Shiny application bundled with the **HistoLearn** package.
 #' The app provides an interface for clustering, visualization, and training
-#' downstream k-NN classification models on histology embeddings.
+#' downstream classification models on histology embeddings.
 #'
 #' @return No return value; opens a Shiny application in the user's browser.
 #'
