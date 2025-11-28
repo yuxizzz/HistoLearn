@@ -10,6 +10,7 @@ Authors@R:
         role = c("aut", "cre")
       )
     )
+Maintainer: Yuxi Zhu <yuxi.zhu@mail.utoronto.ca>
 Description: HistoLearn provides a workflow for computational pathology that 
     integrates downstream analysis (including interpretation, visualization, 
     and modeling) of H&E embeddings generated from pathology foundation models. 
@@ -42,3 +43,4 @@ Suggests:
     uwot
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+URL: https://github.com/yuxizzz/HistoLearn
