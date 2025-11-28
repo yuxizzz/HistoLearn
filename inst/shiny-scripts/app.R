@@ -73,9 +73,10 @@ ui <- fluidPage(
 
       tags$hr(),
       h4("3. Model training & evaluation"),
-      tags$p("Note: Train fraction ranges from 0.5 to 0.9 to ensure the model
-             has enough testing and training data."),
-
+      tags$p("Note: The train fraction ranges from 0.5 to 0.9 to ensure sufficient
+        data for both training and testing. Choose the PCA reduced dimension (k)
+        carefully—do not set it too large. In practice, selecting around 10–20
+        components is often appropriate."),
       # Training fraction slider
       sliderInput(
         "train_frac",
@@ -299,6 +300,19 @@ server <- function(input, output, session) {
       return(NULL)
     }
 
+    # Check that requested reduced dimension does not exceed feature count
+    p <- ncol(feature)
+    if (input$dr_k > p) {
+      showNotification(
+        paste0(
+          "Reduced dimension (k = ", input$dr_k,
+          ") cannot exceed the number of features (", p, ")."
+        ),
+        type = "error"
+      )
+      return(NULL)
+    }
+
     # Train/test split based on user-specified fraction
     train_frac <- input$train_frac
     set.seed(123)
@@ -318,7 +332,7 @@ server <- function(input, output, session) {
 
     hf_test <- HistoLearn::load_embeddings(
       feature = feature_test,
-      label   = label_test
+      label = label_test
     )
 
     # Train model
@@ -334,7 +348,7 @@ server <- function(input, output, session) {
     # Evaluate model
     ev <- HistoLearn::evaluate_model(
       trained_model = tm,
-      test_data     = hf_test
+      test_data = hf_test
     )
 
     eval_result_rv(ev)
