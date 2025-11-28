@@ -1,3 +1,9 @@
+# Purpose: test for load_embeddings
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: None known.
+
 test_that("load_embeddings works with valid feature and label (base case)", {
   feature <- matrix(1:6, nrow = 3, ncol = 2)
   label <- c("A", "B", "A")

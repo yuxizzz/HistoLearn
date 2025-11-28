@@ -1,4 +1,8 @@
-# R/data.R
+# Purpose: Document example datasets (embeddings + labels) for the HistoLearn package
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: None known; datasets are static and used only for examples.
 
 #' Training embeddings (example data)
 #'

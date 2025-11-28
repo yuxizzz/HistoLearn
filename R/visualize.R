@@ -1,3 +1,11 @@
+# Purpose: Project histology embeddings to low-dimensional space (via PCA) and
+#          visualize them using 2D scatterplots or pairwise scatterplot matrices.
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: Currently only PCA is supported; future implementation can
+# expand to Umap
+
 #' Visualize Embeddings Using Reduced Dimensions
 #'
 #' Project histological feature embeddings to a low-dimensional space and

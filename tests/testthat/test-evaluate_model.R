@@ -1,3 +1,9 @@
+# Purpose: Test for evaluate model
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: None known.
+
 # Simulate simple two-class training and test data
 set.seed(42)
 

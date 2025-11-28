@@ -1,3 +1,9 @@
+# Purpose: test for visualization function
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: None known.
+
 # Simulate simple two-class data
 set.seed(2)
 X <- matrix(rnorm(200), nrow = 40, ncol = 10)

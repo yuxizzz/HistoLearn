@@ -1,3 +1,10 @@
+# Purpose: Evaluate performance of a trained HistoLearn classification model on
+#          a test dataset.
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: None known
+
 #' Evaluate Model Performance
 #'
 #' Evaluate a trained classification model on a test dataset. The function

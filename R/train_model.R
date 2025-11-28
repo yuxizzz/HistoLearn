@@ -1,3 +1,13 @@
+# Purpose: Train supervised classifiers on histology embeddings using
+#          dimensionality reduction (PCA) and caret-based models (kNN/logistic),
+#          with helper functions for DR and model fitting.
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: Currently supports only PCA for DR and kNN/multinomial
+#                  logistic regression as classifiers; future extensions may
+#                  add other dimension reduction methods and models.
+
 #' Train a classifier on embeddings
 #'
 #' @description

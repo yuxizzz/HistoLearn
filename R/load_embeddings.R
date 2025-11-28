@@ -1,3 +1,10 @@
+# Purpose: Load histology feature embeddings and attach labels to create a
+#          standardized "histofeature" object for downstream HistoLearn analysis.
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: None known
+
 #' Load Histological Feature Embeddings
 #'
 #' Load histology feature embeddings (rows = samples, columns = features)

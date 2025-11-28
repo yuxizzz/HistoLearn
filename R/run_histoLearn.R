@@ -1,3 +1,10 @@
+# Purpose: Launch the HistoLearn Shiny application for interactive visualization,
+#          dimensionality reduction, and model training on histology embeddings.
+# Author: Yuxi Zhu
+# Date: 2025-11-27
+# Version: 0.1.0
+# Bugs and Issues: None known
+
 #' Launch Shiny App for HistoLearn
 #'
 #' Launches the Shiny application bundled with the **HistoLearn** package.
