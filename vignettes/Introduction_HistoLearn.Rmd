@@ -94,7 +94,7 @@ HistoLearn::visualize_embeddings(input_data=trainset, dimensions = 4, type='pca'
 
 ### 3. Train and Evaluate the Classification Models
 
-From the PCA visualizations in Step 2, we observe clear class separation, suggesting that a simple downstream classifier may perform well. We now train a k-NN classifier on PCA-reduced embeddings. The `train_model()` function performs PCA, keeps the specified number of components (`dr_k`), and fits the chosen classifier.
+From the PCA visualizations in Step 2, we observe clear class separation, suggesting that a simple downstream classifier training on the embeddings may perform well. We first try training a k-NN classifier on PCA-reduced embeddings. The `train_model()` function performs PCA, keeps the specified number of components (`dr_k`), and fits the chosen classifier.
 
 Here, we train a model using 20 PCA components:
 
@@ -108,7 +108,7 @@ Next, we evaluate the model on the test set. evaluate_model() applies the fitted
 HistoLearn::evaluate_model(trained_model=model, test_data = testset)
 ```
 
-Next, we try logistic regression to see if it yields better performance. Logistic regression is commonly used as a linear probe, as described in Chen et al. (2024).
+Next, we try logistic regression to see if it yields better performance. Logistic regression, also known as linear probing, is commonly used as downstream classifiers, as described in Chen et al. (2024).
 
 ```{r}
 model <- HistoLearn::train_model(trainset, dr = "pca", dr_k = 20, model = "logistic")

@@ -87,7 +87,7 @@ visualize_embeddings <- function(input_data,
     p <- GGally::ggpairs(
       reduced_dim,
       columns = seq_len(k),
-      mapping = ggplot2::aes(color = reduced_dim$label),
+      mapping = ggplot2::aes(color = .data$label),
       lower   = list(continuous = GGally::wrap("points", alpha = 0.7, size = 1.5)),
       upper   = list(continuous = GGally::wrap("points", alpha = 0.7, size = 1.5)),
       diag    = list(continuous = GGally::wrap("densityDiag")),
@@ -102,7 +102,7 @@ visualize_embeddings <- function(input_data,
     # Exactly 2 dimensions -> produce 2D scatterplot
     p <- ggplot2::ggplot(
       reduced_dim,
-      aes(reduced_dim$dim1, reduced_dim$dim2, color = reduced_dim$label)
+      aes(.data$dim1, .data$dim2, color = .data$label)
     ) +
       ggplot2::geom_point(size = 2, alpha = 0.8) +
       ggplot2::theme_minimal() +

@@ -94,13 +94,13 @@ evaluate_model <- function(trained_model, test_data) {
   p <- ggplot2::ggplot(
     cm_test_df,
     aes(
-      x = cm_test_df$Prediction,
-      y = cm_test_df$Reference,
-      fill = cm_test_df$Freq
+      x = .data$Prediction,
+      y = .data$Reference,
+      fill = .data$Freq
     )
   ) +
     geom_tile(color = "white") +
-    geom_text(aes(label = cm_test_df$Freq), color = "white", size = 5) +
+    geom_text(aes(label = .data$Freq), color = "white", size = 5) +
     scale_fill_gradient(low = "skyblue", high = "darkblue") +
     labs(
       title = "Test Confusion Matrix",
@@ -113,13 +113,13 @@ evaluate_model <- function(trained_model, test_data) {
   p_train <- ggplot2::ggplot(
     cm_train_df,
     aes(
-      x = cm_train_df$Prediction,
-      y = cm_train_df$Reference,
-      fill = cm_train_df$Freq
+      x = .data$Prediction,
+      y = .data$Reference,
+      fill = .data$Freq
     )
   ) +
     geom_tile(color = "white") +
-    geom_text(aes(label = cm_train_df$Freq), color = "white", size = 5) +
+    geom_text(aes(label = .data$Freq), color = "white", size = 5) +
     scale_fill_gradient(low = "skyblue", high = "darkblue") +
     labs(
       title = "Train Confusion Matrix",

@@ -1,3 +1,9 @@
+# Purpose: test for train models
+# Author: Yuxi Zhu
+# Date: 2025-11-28
+# Version: 0.1.0
+# Bugs and Issues: None known.
+
 # Simulate simple two-class data
 set.seed(4)
 X <- matrix(rnorm(300), nrow = 60, ncol = 5)
@@ -78,12 +84,6 @@ test_that("reduce_dim returns prcomp model and k columns", {
 test_that("reduce_dim errors on k greater than input dimension", {
   expect_error(reduce_dim(X, method = "pca", k = 10))
 })
-
-# Purpose: test for train_model
-# Author: Yuxi Zhu
-# Date: 2025-11-27
-# Version: 0.1.0
-# Bugs and Issues: None known.
 
 test_that("reduce_dim errors on unsupported method", {
   expect_error(reduce_dim(X, method = "umap", k = 2))
