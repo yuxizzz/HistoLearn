@@ -25,6 +25,8 @@ centered and scaled, and \code{k} is selected via cross-validation.
 \note{
 Documentation and code debugging processes were refined with the assistance
 of ChatGPT-5 to improve accuracy and clarity.
+
+The code is written by Yuxi Zhu and is turned into helper function by ChatGPT.
 }
 \references{
 Kuhn, M. (2008). Building Predictive Models in R Using the \pkg{caret}

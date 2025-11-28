@@ -28,6 +28,8 @@ Currently, only Principal Component Analysis (PCA) is implemented.
 \note{
 Documentation and code debugging processes were refined with the assistance
 of ChatGPT-5 to improve accuracy and clarity.
+
+The code is written by Yuxi Zhu and is turned into helper function by ChatGPT.
 }
 \references{
 OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)

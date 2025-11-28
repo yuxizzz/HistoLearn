@@ -32,6 +32,10 @@ features, generates predictions using the fitted classifier, computes overall
 accuracy, and visualizes the training and test confusion matrices using
 \pkg{ggplot2}.
 }
+\note{
+Documentation and code debugging processes were refined with the assistance
+of ChatGPT-5 to improve accuracy and clarity.
+}
 \examples{
 \dontrun{
 data(train_embeddings)

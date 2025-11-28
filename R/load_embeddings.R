@@ -41,7 +41,7 @@ load_embeddings <- function(feature, label) {
   if (nrow(result) == 0L || ncol(result) == 0L) {
     stop("feature must have at least one row and one column.", call. = TRUE)
   }
-  if (!all(vapply(result, is.numeric, logical(1)))) {
+  if (! all(vapply(result, is.numeric, logical(1)))) {
     stop("All columns in 'feature' must be numeric.", call. = TRUE)
   }
   if (anyNA(result)) {
@@ -67,7 +67,7 @@ load_embeddings <- function(feature, label) {
       stop("If 'label' is a matrix, it must have exactly one column.", call. = TRUE)
     }
     label <- label[ , 1]
-  } else if (!(is.vector(label) || is.factor(label))) {
+  } else if (! (is.vector(label) || is.factor(label))) {
     # Anything else is not supported
     stop("'label' must be a vector, factor, 1-column matrix, or 1-column data.frame.",
          call. = TRUE)

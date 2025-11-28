@@ -53,7 +53,7 @@ visualize_embeddings <- function(input_data,
                                  type       = "pca") {
 
   # Validate input_data object
-  if (!inherits(input_data, "histofeature")) {
+  if (! inherits(input_data, "histofeature")) {
     stop("invalid input", call. = FALSE)
   }
   # Convert dimensions to integer for safety

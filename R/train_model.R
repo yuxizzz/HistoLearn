@@ -86,7 +86,7 @@ train_model <- function(feature_embedding,
                         dr_k  = 20,
                         model = c("knn", "logistic")) {
   # Validate input type
-  if (!inherits(feature_embedding, "histofeature")) {
+  if (! inherits(feature_embedding, "histofeature")) {
     stop("invalid input", call. = TRUE)
   }
 
@@ -157,6 +157,7 @@ train_model <- function(feature_embedding,
 #' Documentation and code debugging processes were refined with the assistance
 #' of ChatGPT-5 to improve accuracy and clarity.
 #'
+#' The code is written by Yuxi Zhu and is turned into helper function by ChatGPT.
 #' @keywords internal
 #' @import stats
 reduce_dim <- function(X, method = "pca", k = 20) {
@@ -211,6 +212,7 @@ reduce_dim <- function(X, method = "pca", k = 20) {
 #' Documentation and code debugging processes were refined with the assistance
 #' of ChatGPT-5 to improve accuracy and clarity.
 #'
+#' The code is written by Yuxi Zhu and is turned into helper function by ChatGPT.
 #' @keywords internal
 #' @import caret
 train_knn <- function(X, y) {
@@ -272,6 +274,8 @@ train_knn <- function(X, y) {
 #' @note
 #' Documentation and code debugging processes were refined with the assistance
 #' of ChatGPT-5 to improve accuracy and clarity.
+#'
+#' The code is written by Yuxi Zhu and is turned into helper function by ChatGPT.
 #'
 #' @keywords internal
 #' @import caret nnet

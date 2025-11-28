@@ -46,14 +46,18 @@
 #' OpenAI. (2025). ChatGPT (GPT-5.1, February 2025 version)
 #' (Large language model). <https://chat.openai.com/>
 #'
+#' @note
+#' Documentation and code debugging processes were refined with the assistance
+#' of ChatGPT-5 to improve accuracy and clarity.
+#'
 #' @export
 #' @import caret ggplot2
 evaluate_model <- function(trained_model, test_data) {
   # check inputs
-  if (!inherits(test_data, "histofeature")) {
+  if (! inherits(test_data, "histofeature")) {
     stop("`test_data` must be a 'histofeature' object.", call. = TRUE)
   }
-  if (!inherits(trained_model, "histolearn")) {
+  if (! inherits(trained_model, "histolearn")) {
     stop("`trained_model` must be a 'histolearn' object.", call. = TRUE)
   }
 
